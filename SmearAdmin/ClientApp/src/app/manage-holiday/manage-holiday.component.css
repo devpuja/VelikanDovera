@@ -1,0 +1,18 @@
+.yes {
+  color: forestgreen;
+  border: 1px dashed forestgreen;
+  background-color: lightgreen;
+}
+
+.no {
+  color: white;
+  border: 1px dashed red;
+  background-color: lightcoral;
+}
+
+.yesno {
+  padding: 1px;
+  text-align: center;
+  font-weight: 600;
+  width: 35px;
+}

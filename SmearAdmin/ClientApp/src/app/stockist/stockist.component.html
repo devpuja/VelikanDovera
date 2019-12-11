@@ -1,0 +1,86 @@
+<div style="top:10px;">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <b>Stockist</b>
+      <button class="btn btn-success pull-right" [routerLink]="['/manage-stockist']"><b><i class="fas fa-list-ul"></i> Manage Stockists</b></button>
+      <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <form [formGroup]="stockFormGroup" (ngSubmit)="submitStockistForm()" novalidate>
+          <mat-horizontal-stepper [linear]="isLinear" #stepper>
+            <mat-step>
+              <ng-template matStepLabel>Profile</ng-template>
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input matInput placeholder="Stockist Name" formControlName="StockistNameCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
+                    <mat-error *ngIf="StockistNameCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+                    <mat-error *ngIf="StockistNameCtrl.hasError('minlength')">Min 3 chars</mat-error>
+                    <mat-error *ngIf="StockistNameCtrl.hasError('required')">Stockist Name Required</mat-error>
+                    <mat-error *ngIf="StockistNameCtrl.hasError('pattern')">Only letters are allowed</mat-error>
+                    <mat-hint align="end">{{StockistNameCtrl.value?.length || 0}} / 30</mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput [max]="maxDateFoundation" [matDatepicker]="pickerFD" formControlName="FoundationDayCtrl" placeholder="Foundation Day" maxlength="10">
+                    <mat-datepicker-toggle matSuffix [for]="pickerFD"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFD></mat-datepicker>
+                    <mat-error *ngIf="FoundationDayCtrl.hasError('matDatepickerParse')">Invalid Date</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <mat-select formControlName="CommunityCtrl" placeholder="Choose Community" required>
+                      <mat-option [value]="">--Community--</mat-option>
+                      <mat-option *ngFor="let co of CommunityList" [value]="co.Id">
+                        {{ co.Value }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="CommunityCtrl.hasError('required')">Community required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div style="margin-top:50px">
+                <button mat-mini-fab matStepperNext color="accent" type="button" title="Next"><i class="fas fa-arrow-right"></i></button>
+              </div>
+            </mat-step>
+
+            <mat-step>
+              <ng-template matStepLabel>Stockist Shop Details</ng-template>
+              <app-chemist-stockist-resource [parentForm]="stockFormGroup.get('common')"></app-chemist-stockist-resource>
+
+              <div style="margin-top:50px">
+                <button mat-mini-fab matStepperPrevious color="primary" type="button" title="Back"><i class="fas fa-arrow-left"></i></button>&nbsp;
+                <button mat-mini-fab matStepperNext color="accent" type="button" title="Next"><i class="fas fa-arrow-right"></i></button>
+              </div>
+            </mat-step>
+
+            <mat-step>
+              <ng-template matStepLabel>Address & Contact</ng-template>
+              <app-contact-resource [parentForm]="stockFormGroup.get('contact')"></app-contact-resource>
+
+              <div class="col-md-12 col-md-push-5" style="margin-top:50px;">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!stockFormGroup.valid">Save Record</button>
+              </div>
+              <br />
+
+              <div style="margin-top:70px">
+                <button mat-mini-fab matStepperPrevious color="primary" type="button" title="Back"><i class="fas fa-arrow-left"></i></button>
+                <!--<button mat-mini-fab matStepperNext color="accent" type="button" title="Next"><i class="fas fa-arrow-right"></i></button>-->
+              </div>
+            </mat-step>
+
+          </mat-horizontal-stepper>
+        </form>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<app-spinner *ngIf="showSpinner"></app-spinner>

@@ -1,0 +1,110 @@
+<div style="top:10px;">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <b>Doctor List</b>
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+          <div id="table">
+            <table mat-table multiTemplateDataRows [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%">
+              <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef> Full Name </th>
+                <td mat-cell *matCellDef="let element">{{element.Name}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="Speciality">
+                <th mat-header-cell *matHeaderCellDef> Speciality </th>
+                <td mat-cell *matCellDef="let element"> {{element.Speciality}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Brand">
+                <th mat-header-cell *matHeaderCellDef> Brand </th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.BrandName}}<br />
+                  <small>{{element.Brand}}</small>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Class">
+                <th mat-header-cell *matHeaderCellDef> Class </th>
+                <td mat-cell *matCellDef="let element"> {{element.Class}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="MobileNumber">
+                <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                <td mat-cell *matCellDef="let element"> {{element.Contact.MobileNumber}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element">
+                  <i class="fas fa-plus-square" style="cursor:pointer;" title="Add Mobile Number" (click)="onAddMobileNumber(element)"></i>
+                  <!--<input id='chkID_' {{element.ID}} type="checkbox" ng-init='checkStatus=false' ng-model='checkStatus'
+                         (click)="onAddMobileNumber(checkStatus,'chkID_'+doc.ID, doc.MobileNumber,doc.Name,$index)" />-->
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator #paginator
+                           [length]="totalItemsCount"
+                           [pageSize]="pageSize"
+                           [pageSizeOptions]="pageSizeOptions"
+                           showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <b>Sent SMS</b>
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+          <form [formGroup]="SMSFormGroup" (ngSubmit)="submitSMSForm()" novalidate>
+            <div id="table">
+              <div class="row">
+                <div class="col-md-8">
+                  <mat-form-field>
+                    <textarea matInput placeholder="Message" formControlName="MessageCtrl" required maxlength="100"></textarea>
+                    <mat-error *ngIf="MessageCtrl.hasError('required')">Message Required</mat-error>
+                    <mat-hint align="end">{{MessageCtrl.value?.length || 0}} / 100</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <button mat-raised-button color="primary" type="submit" [disabled]="!SMSFormGroup.valid">Send SMS</button>
+                </div>
+              </div>
+
+              <div class="clearfix"></div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div style="margin-top:5px;"><b>List of Selected Doctors: {{sendSmsData.length}}</b></div>
+                  <mat-chip-list #chipList aria-label="Mobile Numbers" [class]="mat-chip-list-stacked">
+                    <mat-chip *ngFor="let smsData of sendSmsData" [selectable]="selectable"
+                              (removed)="onRemoveMobileNumber(smsData)">
+                      <b>{{smsData.Name}} ({{smsData.MobileNumber}})</b>
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>                
+              </div>
+
+            </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
+</div>
+
+<app-spinner *ngIf="showSpinner"></app-spinner>

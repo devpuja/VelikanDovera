@@ -1,0 +1,208 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>ClientApp\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+
+    <!-- Set this to true if you enable server-side prerendering -->
+    <BuildServerSideRenderer>false</BuildServerSideRenderer>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
+    <PackageReference Include="DinkToPdfIncludesDependencies" Version="1.0.8" />
+    <PackageReference Include="DotNetCorePdf-Standard2.0" Version="2.0.1" />
+    <PackageReference Include="EPPlus" Version="4.5.3.2" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.0.100" />
+    <PackageReference Include="Humanizer" Version="2.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+    <PackageReference Include="Microsoft.TypeScript.Compiler" Version="3.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.1.0-preview1-final" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Downloads\**" />
+    <Compile Remove="Uploads\**" />
+    <Content Remove="$(SpaRoot)**" />
+    <Content Remove="Downloads\**" />
+    <Content Remove="Uploads\**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Downloads\**" />
+    <EmbeddedResource Remove="Uploads\**" />
+    <None Remove="Downloads\**" />
+    <None Remove="Uploads\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\AspNetRoleClaims.cs" />
+    <Compile Remove="Models\AspNetRoles.cs" />
+    <Compile Remove="Models\AspNetUserClaims.cs" />
+    <Compile Remove="Models\AspNetUserLogins.cs" />
+    <Compile Remove="Models\AspNetUserRoles.cs" />
+    <Compile Remove="Models\AspNetUsers.cs" />
+    <Compile Remove="Models\AspNetUserTokens.cs" />
+    <Compile Remove="Models\AuditableEntity.cs" />
+    <Compile Remove="Models\Chemist.cs" />
+    <Compile Remove="Models\ChemistStockistResourse.cs" />
+    <Compile Remove="Models\Community.cs" />
+    <Compile Remove="Models\ContactResourse.cs" />
+    <Compile Remove="Models\Doctor.cs" />
+    <Compile Remove="Models\EmployeeExpenses.cs" />
+    <Compile Remove="Models\EmployeeExpensesStatus.cs" />
+    <Compile Remove="Models\HolidayList.cs" />
+    <Compile Remove="Models\HQRegion.cs" />
+    <Compile Remove="Models\MasterKeyValue.cs" />
+    <Compile Remove="Models\Patient.cs" />
+    <Compile Remove="Models\Smslogger.cs" />
+    <Compile Remove="Models\Stockist.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\admin.auth.guard.ts" />
+    <None Remove="ClientApp\src\app\pipes\splitPipe.ts" />
+    <None Remove="ClientApp\src\app\shared\models\auditable-entity.interface.ts" />
+    <None Remove="ClientApp\src\app\shared\models\chemist-stockist-resourse.interface.ts" />
+    <None Remove="ClientApp\src\app\shared\models\chemist.interface.ts" />
+    <None Remove="ClientApp\src\app\shared\models\contact-resource.interface.ts" />
+    <None Remove="ClientApp\src\app\shared\models\doctor.interface.ts" />
+    <None Remove="ClientApp\src\app\shared\models\employee.expenses.interface.ts" />
+    <None Remove="ClientApp\src\app\shared\models\masters.interface.ts" />
+    <None Remove="ClientApp\src\app\shared\models\role-claims.interface.ts" />
+    <None Remove="ClientApp\src\app\shared\models\send-sms.interface.ts" />
+    <None Remove="ClientApp\src\app\shared\models\stockist.interface.ts" />
+    <None Remove="ClientApp\src\app\shared\services\employee.service.ts~RF488efc4.TMP" />
+    <None Remove="ClientApp\src\app\shared\services\employee.service.ts~RF488efc4.TMP" />
+    <None Remove="ClientApp\src\app\shared\services\user1.service.ts" />
+    <None Remove="ClientApp\src\app\shared\services\user1.service.ts" />
+    <None Remove="ClientApp\src\app\shared\utils\jjwt.interceptor.ts" />
+    <None Remove="ClientApp\src\app\shared\utils\jjwt.interceptor.ts" />
+    <None Remove="libwkhtmltox.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="obj\Debug\netcoreapp2.1\SmearAdmin.AssemblyInfo.cs" />
+    <Compile Include="obj\Debug\netcoreapp2.1\SmearAdmin.RazorAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="libwkhtmltox.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="obj\project.assets.json" />
+    <Content Include="obj\SmearAdmin.csproj.nuget.dgspec.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\admin.auth.guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\auditable-entity.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\chemist-stockist-resourse.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\chemist.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\contact-resource.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\doctor.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\employee.expenses.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\masters.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\role-claims.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\send-sms.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\stockist.interface.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="bin\Debug\netcoreapp2.1\" />
+    <Folder Include="ClientApp\src\app\pipes\" />
+    <Folder Include="wwwroot\Downloads\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="obj\Debug\netcoreapp2.1\SmearAdmin.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\netcoreapp2.1\SmearAdmin.assets.cache" />
+    <None Include="obj\Debug\netcoreapp2.1\SmearAdmin.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\netcoreapp2.1\SmearAdmin.csprojAssemblyReference.cache" />
+    <None Include="obj\Debug\netcoreapp2.1\SmearAdmin.RazorAssemblyInfo.cache" />
+    <None Include="obj\SmearAdmin.csproj.nuget.cache" />
+    <None Include="obj\SmearAdmin.csproj.nuget.g.props" />
+    <None Include="obj\SmearAdmin.csproj.nuget.g.targets" />
+    <None Include="wwwroot\AssetsPdf\pdfStyle.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web.Extensions">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Web.Extensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+</Project>

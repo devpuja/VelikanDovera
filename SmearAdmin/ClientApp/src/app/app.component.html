@@ -1,0 +1,104 @@
+<!--<div class='container-fluid'>
+  <div class='row'>
+    <div class='col-sm-3'>
+      <app-nav-menu></app-nav-menu>
+    </div>
+    <div class='col-sm-9 body-content'>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>-->
+
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="example-toolbar">
+    <button *ngIf="userService.isLoggedIn()" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+
+    <h1 class="example-app-name">VD</h1>
+    <span *ngIf="userService.isLoggedIn()" style="font-size:16px; position:absolute;right:20px;">
+      <b style="padding-right:10px;">Welcome, {{userService.getFullName()}}</b>
+      <button class="btn btn-danger" (click)="onLogout()"><b><i class="fas fa-sign-out-alt"></i> Logout</b></button>
+    </span>
+    <button mat-button [routerLink]="['/login']" *ngIf="!userService.isLoggedIn()"> Login</button>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container"
+                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" class="sidenav-menu">
+
+      <ul *ngIf="userService.isLoggedIn()">
+        <li *ngIf="userService.isAdmin">
+          <button [routerLink]="['/admin-dashboard']" mat-button><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+        </li>
+        <li *ngIf="userService.isUser">
+          <button [routerLink]="['/employee-dashboard']" mat-button><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+        </li>
+        <li>
+          <button mat-button [matMenuTriggerFor]="menu"><i class="fas fa-bars"></i> Masters</button>
+          <mat-menu #menu="matMenu">
+            <!--<button [routerLink]="['/fetch-data']" mat-menu-item><i class="far fa-plus-square"></i> Fetch</button>-->
+            <button [routerLink]="['/masters']" mat-menu-item><i class="far fa-plus-square"></i> Manage Masters </button>
+            <button [routerLink]="['/holiday']" mat-menu-item><i class="fas fa-wine-glass-alt"></i> Holiday </button>
+            <button [routerLink]="['/manage-holiday']" mat-menu-item><i class="fas fa-list-ul"></i> Manage Holiday</button>
+          </mat-menu>
+        </li>
+        <li *ngIf="userService.isAdmin">
+          <button mat-button [matMenuTriggerFor]="menuEmployee"><i class="fas fa-user-plus"></i> Employee</button>
+          <mat-menu #menuEmployee="matMenu">
+            <button [routerLink]="['/employee']" mat-menu-item><i class="far fa-plus-square"></i> Add Employee</button>
+            <button [routerLink]="['/employee-list']" mat-menu-item><i class="fas fa-list-ul"></i> View Employee</button>
+            <button [routerLink]="['/manage-employee-expenses-list']" mat-menu-item><i class="fas fa-list-ul"></i> Manage Employee Expenses</button>
+          </mat-menu>
+        </li>
+        <li>
+          <button mat-button [matMenuTriggerFor]="menuDoctor"><i class="fas fa-stethoscope"></i> Doctor</button>
+          <mat-menu #menuDoctor="matMenu">
+            <button [routerLink]="['/doctor']" mat-menu-item><i class="far fa-plus-square"></i> Add Doctor</button>
+            <button [routerLink]="['/manage-doctor']" mat-menu-item><i class="fas fa-list-ul"></i> Manage Doctor</button>
+          </mat-menu>
+        </li>
+        <li>
+          <!--<i class="fas fa-medkit"></i>-->
+          <button mat-button [matMenuTriggerFor]="menuChemist"><i class="fas fa-capsules"></i> Chemist</button>
+          <mat-menu #menuChemist="matMenu">
+            <button [routerLink]="['/chemist']" mat-menu-item><i class="far fa-plus-square"></i> Add Chemist</button>
+            <button [routerLink]="['/manage-chemist']" mat-menu-item><i class="fas fa-list-ul"></i> Manage Chemist</button>
+          </mat-menu>
+        </li>
+        <li>
+          <button mat-button [matMenuTriggerFor]="menuStockist"><i class="fas fa-ambulance"></i> Stockist</button>
+          <mat-menu #menuStockist="matMenu">
+            <button [routerLink]="['/stockist']" mat-menu-item><i class="far fa-plus-square"></i> Add Stockist</button>
+            <button [routerLink]="['/manage-stockist']" mat-menu-item><i class="fas fa-list-ul"></i> Manage Stockist</button>
+          </mat-menu>
+        </li>
+        <!--<li>
+          <button mat-button [matMenuTriggerFor]="menuPatient"><i class="fas fa-bed"></i> Patient</button>
+          <mat-menu #menuPatient="matMenu">
+            <button [routerLink]="['/patient']" mat-menu-item><i class="far fa-plus-square"></i> Add Patient</button>
+            <button [routerLink]="['/manage-patient']" mat-menu-item><i class="fas fa-list-ul"></i> Manage Patient</button>
+          </mat-menu>
+        </li>-->
+        <li *ngIf="userService.isAdmin">
+          <button mat-button [matMenuTriggerFor]="menuMiscellaneous"><i class="fas fa-bed"></i> Miscellaneous</button>
+          <mat-menu #menuMiscellaneous="matMenu">
+            <!--<button [routerLink]="['/holiday']" mat-menu-item><i class="fas fa-cookie-bite"></i> Holiday</button>-->
+            <button [routerLink]="['/swap-employee']" mat-menu-item><i class="fas fa-random"></i> Swap Employee</button>
+            <button [routerLink]="['/send-sms']" mat-menu-item><i class="fas fa-mobile"></i> Send SMS</button>
+          </mat-menu>
+        </li>
+        <li>
+          <button (click)="onLogout()" mat-button><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </li>
+      </ul>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div style="padding:5px;">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+</div>

@@ -1,0 +1,51 @@
+<div style="top:10px;">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <b>Swap Employee</b>
+      <!--<button class="btn btn-success pull-right" [routerLink]="['/manage-holiday']"><b><i class="fas fa-list-ul"></i> Manage Holiday</b></button>-->
+      <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+        <form [formGroup]="swapEmpFormGroup" (ngSubmit)="submitSwapForm()" novalidate>
+          <div class="row">
+            <div class="col-md-3">
+              <mat-form-field>
+                <mat-select formControlName="SwapFromCtrl" placeholder="Choose User From" required>
+                  <mat-option [value]="">--User Name--</mat-option>
+                  <mat-option *ngFor="let unfrm of EmployeeList" [value]="unfrm.UserName">
+                    {{ unfrm.FullName }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="SwapFromCtrl.hasError('required')">User From Required</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-1">
+              <p><i><b>To</b></i></p>
+            </div>
+
+            <div class="col-md-3">
+              <mat-form-field>
+                <mat-select formControlName="SwapToCtrl" placeholder="Choose User To" required>
+                  <mat-option [value]="">--User Name--</mat-option>
+                  <mat-option *ngFor="let unto of EmployeeList" [value]="unto.UserName">
+                    {{ unto.FullName }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="SwapToCtrl.hasError('required')">User To Required</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-2">
+              <button mat-raised-button color="primary" type="submit" [disabled]="!swapEmpFormGroup.valid">Save Record</button>
+            </div>
+
+          </div>         
+
+        </form>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<app-spinner *ngIf="showSpinner"></app-spinner>

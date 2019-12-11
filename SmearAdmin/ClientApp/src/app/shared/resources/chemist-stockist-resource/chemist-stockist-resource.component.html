@@ -1,0 +1,105 @@
+<div [formGroup]="commonForm">
+  <div class="row">
+    <div class="col-md-3">
+      <mat-form-field>
+        <input matInput placeholder="DrugLicense No" formControlName="DrugLicenseNoCtrl" required maxlength="30" minlength="3">
+        <mat-error *ngIf="commonForm.controls.DrugLicenseNoCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <mat-error *ngIf="commonForm.controls.DrugLicenseNoCtrl.hasError('minlength')">Min 3 chars</mat-error>
+        <mat-error *ngIf="commonForm.controls.DrugLicenseNoCtrl.hasError('required')">Drug License Number Required</mat-error>
+        <mat-hint align="end">{{commonForm.controls.DrugLicenseNoCtrl.value?.length || 0}} / 30</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field>
+        <input matInput placeholder="FoodLicense No" formControlName="FoodLicenseNoCtrl" required maxlength="30" minlength="3">
+        <mat-error *ngIf="commonForm.controls.FoodLicenseNoCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <mat-error *ngIf="commonForm.controls.FoodLicenseNoCtrl.hasError('minlength')">Min 3 chars</mat-error>
+        <mat-error *ngIf="commonForm.controls.FoodLicenseNoCtrl.hasError('required')">Food License Number Required</mat-error>
+        <mat-hint align="end">{{commonForm.controls.FoodLicenseNoCtrl.value?.length || 0}} / 30</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field>
+        <input matInput placeholder="GST No" formControlName="GSTNoCtrl" required maxlength="30" minlength="3">
+        <mat-error *ngIf="commonForm.controls.GSTNoCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <mat-error *ngIf="commonForm.controls.GSTNoCtrl.hasError('minlength')">Min 3 chars</mat-error>
+        <mat-error *ngIf="commonForm.controls.GSTNoCtrl.hasError('required')">GST No Required</mat-error>
+        <mat-hint align="end">{{commonForm.controls.GSTNoCtrl.value?.length || 0}} / 30</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-select formControlName="BestTimeToMeetCtrl" placeholder="Choose Best Time To Meet" required>
+          <mat-option [value]="">--BestTimeToMeet--</mat-option>
+          <mat-option *ngFor="let bt of BestTimeToMeetList" [value]="bt.Value">
+            {{ bt.Value }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="commonForm.controls.BestTimeToMeetCtrl.hasError('required')">Best Time To Meet required</mat-error>
+      </mat-form-field>
+    </div>
+    
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <mat-form-field>
+        <input matInput placeholder="Owner Name" formControlName="OwnerNameCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
+        <mat-error *ngIf="commonForm.controls.OwnerNameCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <mat-error *ngIf="commonForm.controls.OwnerNameCtrl.hasError('minlength')">Min 3 chars</mat-error>
+        <mat-error *ngIf="commonForm.controls.OwnerNameCtrl.hasError('required')">Owner Name Required</mat-error>
+        <mat-error *ngIf="commonForm.controls.OwnerNameCtrl.hasError('pattern')">Only letters are allowed</mat-error>
+        <mat-hint align="end">{{commonForm.controls.OwnerNameCtrl.value?.length || 0}} / 30</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-select formControlName="AreaCtrl" placeholder="Choose Area" required>
+          <mat-option [value]="">--Area--</mat-option>
+          <mat-option *ngFor="let a of AreaList" [value]="a.Value">
+            {{ a.Value }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="commonForm.controls.AreaCtrl.hasError('required')">Area required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field class="example-full-width">
+        <input matInput [min]="minDateDOB" [max]="maxDateDOB" [matDatepicker]="pickerDOB" formControlName="DOBCtrl" placeholder="Date Of Birth" maxlength="10">
+        <mat-datepicker-toggle matSuffix [for]="pickerDOB"></mat-datepicker-toggle>
+        <mat-datepicker #pickerDOB></mat-datepicker>
+        <mat-error *ngIf="commonForm.controls.DOBCtrl.hasError('matDatepickerParse')">Invalid Date</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field class="example-full-width">
+        <input matInput [min]="minDateDOA" [max]="maxDateDOA" [matDatepicker]="pickerDOA" formControlName="DOACtrl" placeholder="Date Of Anniversary" maxlength="10">
+        <mat-datepicker-toggle matSuffix [for]="pickerDOA"></mat-datepicker-toggle>
+        <mat-datepicker #pickerDOA></mat-datepicker>
+        <mat-error *ngIf="commonForm.controls.DOACtrl.hasError('matDatepickerParse')">Invalid Date</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <mat-form-field>
+        <input matInput placeholder="Email ID" formControlName="EmailIDCtrl" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+        <mat-error *ngIf="commonForm.controls.EmailIDCtrl.hasError('pattern')">Invalid Email</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-6">
+      {{commonForm.value | json}}
+    </div>
+  </div>
+
+</div>
+
+<app-spinner *ngIf="showSpinner"></app-spinner>

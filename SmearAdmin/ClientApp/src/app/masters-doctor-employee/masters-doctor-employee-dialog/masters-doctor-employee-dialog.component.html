@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>Enter Masters </h1>
+<!--<form #f="ngForm" name="ngForm" novalidate>-->
+<!--<form [formGroup]="masterFormGroup" #f="ngForm" name="ngForm" novalidate (ngSubmit)="onClick(f)">-->
+<form [formGroup]="masterFormGroup" #f="ngForm" name="ngForm" novalidate>
+  <div mat-dialog-content>
+    <!--<div *ngIf="errors" class="alert alert-danger" role="alert">
+      <strong>Oops!</strong> {{errors}}
+    </div>-->
+
+    <mat-form-field>
+      <!--<mat-select placeholder="Choose" [formControl]="mastersControl" formControlName="selectMaster" [(ngModel)]="masters.Type" required>-->
+      <mat-select placeholder="Choose" formControlName="selectMaster" [(ngModel)]="masters.Type" required>
+        <mat-option>-- None --</mat-option>
+        <mat-optgroup *ngFor="let group of mastersGroups" [label]="group.name">
+          <mat-option *ngFor="let mst of group.mastersFor" [value]="mst.value">
+            {{mst.viewValue}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+      <mat-error *ngIf="selectMaster.hasError('required')">Please Select Type</mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+      <input formControlName="enterValue" matInput [(ngModel)]="masters.Value" placeholder="Enter Value" required>
+      <mat-error *ngIf="enterValue.hasError('required')">Please Enter Type</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button color="accent" cdkFocusInitial (click)="onClick(f)" [disabled]="!masterFormGroup.valid">Save</button>
+    <!--<button mat-raised-button cdkFocusInitial color="accent" [disabled]="!masterFormGroup.valid">Save</button>-->
+  </div>
+</form>
+<app-spinner *ngIf="showSpinner"></app-spinner>

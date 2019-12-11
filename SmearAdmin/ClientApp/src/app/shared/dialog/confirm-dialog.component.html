@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Confirm</h1>
+<form #f="ngForm" name="ngForm">
+  <div mat-dialog-content>
+    <p>
+      <b>Are you sure to <span style="color:red">DELETE</span>?</b>
+    </p>    
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="accent" cdkFocusInitial (click)="onOk()">Ok</button>    
+  </div>
+</form>

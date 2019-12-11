@@ -1,0 +1,113 @@
+<div style="top:10px;">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="panel panel-default">
+        <div class="panel-heading pnlDetails">
+          <b>Details</b>
+          <!--<button class="btn btn-success pull-right" [routerLink]="['/employee-list']"><b><i class="fas fa-list-ul"></i> View Employees</b></button>-->
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+          <div class="row top-buffer">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn btn-info btnNotify smsDivWH">
+                    <b>SMS Balance</b> <br />
+                    {{SMSBalanceCount}}
+                  </button>
+
+                </div>
+                <div class="col-md-6">
+                  <button class="btn btn-success btnNotify smsDivWH">
+                    <b>Doctor</b> <br />
+                    {{SMSDoctorCount}}
+                  </button>
+                </div>                
+              </div>
+
+              <div class="row" style="height:10px;">&nbsp;</div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn btn-danger btnNotify smsDivWH">
+                    <b>Chemsit</b> <br />
+                    {{SMSChemsitCount}}
+                  </button>
+                </div>
+
+                <div class="col-md-6">
+                  <button class="btn btn-warning btnNotify smsDivWH">
+                    <b>Stockist</b> <br />
+                    {{SMSStockistCount}}
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading pnlExpense">
+              <b>Employee's Expenses</b>
+              <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <!--<div class="col-md-3">
+                  <button class="btn btn-danger" [routerLink]="['/employee-expenses']"><b><i class="fas fa-plus-square"></i> Add Expenses</b></button>
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-success" [routerLink]="['/employee-expenses-list']"><b><i class="fas fa-list-ul"></i> View Expenses</b></button>
+                </div>-->
+
+                <div class="col-md-12">                  
+                  <table style=" width:100%">
+                    <tr style="height:30px;">
+                      <td colspan="4" style="text-align:center;"><b>Employee's Expenses Notification</b></td>
+                    </tr>
+                    <tr style="height:30px;">
+                      <td><b>#</b></td>
+                      <td><b>Name</b></td>
+                      <td><b>User Name</b></td>
+                      <td><b>Month</b></td>
+                      <td><b>Action</b></td>
+                    </tr>
+                    <tr style="height:30px;" *ngFor="let exp of empExpensesStatus let i = index">
+                      <td>{{i+1}}.</td>
+                      <td>{{exp.FullName}}</td>
+                      <td>{{exp.UserName}}</td>
+                      <td><button class="btn btn-danger btnNotify"><b>{{exp.ExpenseMonth}}</b></button></td>
+                      <td>
+                        <button class="btn btn-success btnNotify" (click)="navigate(exp)">
+                          <b><i class="fas fa-external-link-alt"></i> View Expenses</b>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--<div class="row">
+        <div class="col-md-12">
+          
+        </div>
+      </div>-->
+
+    </div>
+  </div>
+</div>
+
+<app-spinner *ngIf="showSpinner"></app-spinner>

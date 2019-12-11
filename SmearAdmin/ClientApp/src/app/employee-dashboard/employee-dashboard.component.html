@@ -1,0 +1,240 @@
+<div style="top:10px;">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="panel panel-default">
+        <div class="panel-heading pnlDetails">
+          <b>Profile Details</b>
+          <!--<button class="btn btn-success pull-right" [routerLink]="['/employee-list']"><b><i class="fas fa-list-ul"></i> View Employees</b></button>-->
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+          <div class="row top-buffer">
+            <div class="col-md-12">
+              <mat-card class="example-card mat-card-padding">
+                <mat-card-header class="mat-card-height">
+                  <div mat-card-avatar><i class="fas fa-edit"></i></div>
+                  <mat-card-title>Update Profile</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <img src="{{PictureUrl}}" class="imgFrame" />
+                    </div>
+
+                    <div class="col-md-8">
+                      <mat-accordion>
+                        <mat-expansion-panel>
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              <div class="btn"><b><i class="fas fa-camera"></i> Upload Photo</b></div>
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+
+                          <form [formGroup]="photoFormGroup" #formPhoto="ngForm" name="ngForm" novalidate>
+                            <input style="display: none" type="file" (change)="onFileChanged($event)" #filePhoto />
+                            <button (click)="filePhoto.click()" mat-raised-button color="primary">Select File</button>
+                            <br />
+                            <!--<img src="~/Uploads/dvsharma2_d21db5cb-ddb0-4669-82ef-cb77f3baf035.jpg" />-->
+                            <div style="margin-top:5px;">
+                              <div class="progress" *ngIf="uploadingProgressing">
+                                <div class="progress-bar bg-danger" role="progressbar" [style.width]="uploadProgress+'%'"
+                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{uploadProgress}}</div>
+                              </div>
+                            </div>
+                          </form>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              <div class="btn"><b><i class="fas fa-key"></i> Change Password</b></div>
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <form [formGroup]="passwordFormGroup" #formPassword="ngForm" name="ngForm" novalidate>
+                            <mat-form-field>
+                              <input matInput placeholder="New Password" formControlName="PasswordCtrl" required maxlength="15" />
+                              <mat-error *ngIf="PasswordCtrl.hasError('required')">Password Required</mat-error>
+                            </mat-form-field>
+                            <br />
+                            <div style="margin-top:5px;">
+                              <button mat-raised-button color="accent" type="submit" [disabled]="formPassword.invalid" (click)="submitPasswordForm(formPassword);">
+                                Update
+                              </button>
+                            </div>
+                          </form>
+                        </mat-expansion-panel>
+                      </mat-accordion>
+
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+              <mat-divider></mat-divider>
+              <mat-card class="example-card mat-card-padding">
+                <mat-card-header class="mat-card-height">
+                  <div mat-card-avatar><i class="fas fa-user"></i></div>
+                  <mat-card-title>Personal Details</mat-card-title>
+                  <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle> <i class="fas fa-user"></i>-->
+                </mat-card-header>
+                <mat-card-content>
+                  Full Name: <b>{{FullName}}</b><br />
+                  Email ID: <b>{{Email}}</b><br />
+                  Date of Birth: <b>{{DOB | date: 'dd-MMM-yyyy'}}</b> |
+                  Date of Joining: <b>{{DOJ| date: 'dd-MMM-yyyy'}}</b> <br />
+                  Pancard: <b>{{Pancard}}</b>
+                </mat-card-content>
+              </mat-card>
+              <mat-divider></mat-divider>
+              <mat-card class="example-card mat-card-padding">
+                <mat-card-header class="mat-card-height">
+                  <div mat-card-avatar><i class="fas fa-address-card"></i></div>
+                  <mat-card-title>Address</mat-card-title>
+                  <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle> <i class="fas fa-user"></i>-->
+                </mat-card-header>
+                <mat-card-content>
+                  Address: <b>{{Address}}</b><br />
+                  Mobile1: <b>{{Mobile1}}</b> | Mobile2: <b>{{Mobile2}}</b>
+                </mat-card-content>
+              </mat-card>
+              <mat-divider></mat-divider>
+              <mat-card class="example-card mat-card-padding">
+                <mat-card-header class="mat-card-height">
+                  <div mat-card-avatar><i class="fas fa-building"></i></div>
+                  <mat-card-title>Office</mat-card-title>
+                  <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle> <i class="fas fa-user"></i>-->
+                </mat-card-header>
+                <mat-card-content>
+                  Department: <b>{{Department}}</b> |
+                  Desigination: <b>{{Desigination}}</b><br />
+                  Grade: <b>{{Grade}}</b> |
+                  HQ: <b>{{HQ}}</b><br />
+                  Region: <b>{{RegionName}}</b>
+                </mat-card-content>
+              </mat-card>
+              <mat-divider></mat-divider>
+              <mat-card class="example-card mat-card-padding">
+                <mat-card-header class="mat-card-height">
+                  <div mat-card-avatar><i class="fas fa-user-lock"></i></div>
+                  <mat-card-title>Roles & Permissions</mat-card-title>
+                  <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle> <i class="fas fa-user"></i>-->
+                </mat-card-header>
+                <mat-card-content>
+                  User Name:<b>{{UserName}}</b> |
+                  Role: <b>{{UserRole}}</b><br />
+                  Permissions: <b>{{UserClaims}}</b>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading pnlExpense">
+              <b>Your Expenses</b>
+              <!--<button class="btn btn-success pull-right" [routerLink]="['/employee-list']"><b><i class="fas fa-list-ul"></i> View Employees</b></button>-->
+              <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <button class="btn btn-danger" [routerLink]="['/employee-expenses']"><b><i class="fas fa-plus-square"></i> Add Expenses</b></button>
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-success" [routerLink]="['/employee-expenses-list']"><b><i class="fas fa-list-ul"></i> View Expenses</b></button>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <table style=" width:70%">
+            <tr>
+              <td colspan="3" style="text-align:center;"><b>PER DAY ALLOWANCE'S</b></td>
+            </tr>
+            <tr style="height:30px;">
+              <td><b>Type</b></td>
+              <td class="allow-greater"><b>Full Day</b></td>
+              <td class="allow-less"><b>Half Day</b></td>
+            </tr>
+            <tr>
+              <td><b>Daily</b></td>
+              <td class="allow-greater">{{Daily}}</td>
+              <td class="allow-less">{{Daily / 2}}</td>
+            </tr>
+            <tr>
+              <td><b>Bike</b></td>
+              <td class="allow-greater">{{Bike}}</td>
+              <td class="allow-less">{{Bike / 2}}</td>
+            </tr>
+            <tr>
+              <td><b>Mobile</b></td>
+              <td class="allow-greater">{{Mobile}}</td>
+              <td class="allow-less">{{Mobile / 2}}</td>
+            </tr>
+            <tr>
+              <td><b>Fare</b></td>
+              <td class="allow-greater">{{Fare}}</td>
+              <td class="allow-less">{{Fare / 2}}</td>
+            </tr>
+            <tr>
+              <td><b>Stationery</b></td>
+              <td class="allow-greater">{{Stationery}}</td>
+              <td class="allow-less">{{Stationery / 2}}</td>
+            </tr>
+            <tr>
+              <td><b>Cyber</b></td>
+              <td class="allow-greater">{{Cyber}}</td>
+              <td class="allow-less">{{Cyber / 2}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <br />
+
+      <div class="row">
+        <div class="col-md-12">
+          <table style=" width:40%">
+            <tr style="height:30px;">
+              <td colspan="3" style="text-align:center;"><b>Expenses Notification</b></td>
+            </tr>
+            <tr style="height:30px;">
+              <td><b>#</b></td>
+              <!--<td><b>Name</b></td>
+              <td><b>User Name</b></td>-->
+              <td><b>Month</b></td>
+              <td><b>Status</b></td>
+            </tr>
+            <tr style="height:30px;" *ngFor="let exp of empExpensesStatus let i = index">
+              <td>{{i+1}}.</td>
+              <!--<td>{{FullName}}</td>
+              <td>{{exp.UserName}}</td>-->
+              <td><div class="btn btn-info btnNotify"><b>{{exp.ExpenseMonth}}</b></div></td>
+              <td>
+                <div *ngIf="exp.Status==0; then thenBlock; else elseBlock"> </div>
+                <ng-template #thenBlock>
+                  <div class="btn btn-danger btnNotify"><b>Not Submitted</b></div>
+                </ng-template>
+                <ng-template #elseBlock>
+                  <div class="btn btn-success btnNotify"><b>Submitted</b></div>
+                </ng-template>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-spinner *ngIf="showSpinner"></app-spinner>

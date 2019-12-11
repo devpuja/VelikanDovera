@@ -1,0 +1,81 @@
+<div style="top:10px;">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <b>Holiday</b>
+      <button class="btn btn-success pull-right" [routerLink]="['/manage-holiday']"><b><i class="fas fa-list-ul"></i> Manage Holiday</b></button>
+      <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <form [formGroup]="holidayFormGroup" (ngSubmit)="submitHolidayForm()" novalidate>
+          <mat-horizontal-stepper [linear]="isLinear" #stepper>
+            <mat-step>
+              <ng-template matStepLabel>Profile</ng-template>
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input matInput placeholder="Festival Name" formControlName="FestivalNameCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
+                    <mat-error *ngIf="FestivalNameCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+                    <mat-error *ngIf="FestivalNameCtrl.hasError('minlength')">Min 3 chars</mat-error>
+                    <mat-error *ngIf="FestivalNameCtrl.hasError('required')">Festival Name Required</mat-error>
+                    <mat-error *ngIf="FestivalNameCtrl.hasError('pattern')">Only letters are allowed</mat-error>
+                    <mat-hint align="end">{{FestivalNameCtrl.value?.length || 0}} / 30</mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput [min]="minDateFestival" [max]="maxDateFestival" [matDatepicker]="pickerFD" formControlName="FestivalDateCtrl" placeholder="Festival Day" maxlength="10">
+                    <mat-datepicker-toggle matSuffix [for]="pickerFD"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFD></mat-datepicker>
+                    <mat-error *ngIf="FestivalDateCtrl.hasError('matDatepickerParse')">Invalid Date</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <textarea matInput placeholder="Description" formControlName="FestivalDescriptionCtrl" required maxlength="200"></textarea>
+                    <mat-error *ngIf="FestivalDescriptionCtrl.hasError('required')">Festival Description Required</mat-error>
+                    <mat-hint align="end">{{FestivalDescriptionCtrl.value?.length || 0}} / 200</mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <mat-select formControlName="IsNationalFestivalCtrl" placeholder="Choose National Festival" required>
+                      <mat-option [value]="">--Is National Festival--</mat-option>
+                      <mat-option [value]="1">Yes</mat-option>
+                      <mat-option [value]="0">No</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="IsNationalFestivalCtrl.hasError('required')">Is National Festival required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <mat-select formControlName="CommunityCtrl" placeholder="Choose Community" required>
+                      <mat-option [value]="">--Community--</mat-option>
+                      <mat-option *ngFor="let co of CommunityList" [value]="co.Id">
+                        {{ co.Value }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="CommunityCtrl.hasError('required')">Community required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-md-push-5" style="margin-top:50px;">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!holidayFormGroup.valid">Save Record</button>
+              </div>
+            </mat-step>            
+          </mat-horizontal-stepper>
+        </form>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<app-spinner *ngIf="showSpinner"></app-spinner>

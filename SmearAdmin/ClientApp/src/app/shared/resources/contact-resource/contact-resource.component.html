@@ -1,0 +1,70 @@
+<div [formGroup]="contactForm">
+  
+  <div class="row">
+    <div class="col-md-3">
+      <mat-form-field>
+        <textarea matInput placeholder="Address" formControlName="AddressCtrl" required maxlength="200"></textarea>
+        <mat-error *ngIf="contactForm.controls.AddressCtrl.hasError('required')">Address Required</mat-error>
+        <mat-hint align="end">{{contactForm.controls.AddressCtrl.value?.length || 0}} / 200</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field>
+        <input matInput placeholder="State" formControlName="StateCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
+        <mat-error *ngIf="contactForm.controls.StateCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <mat-error *ngIf="contactForm.controls.StateCtrl.hasError('minlength')">Min 3 chars</mat-error>
+        <mat-error *ngIf="contactForm.controls.StateCtrl.hasError('required')">State Required</mat-error>
+        <mat-error *ngIf="contactForm.controls.StateCtrl.hasError('pattern')">Only letters are allowed</mat-error>
+        <mat-hint align="end">{{contactForm.controls.StateCtrl.value?.length || 0}} / 30</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field>
+        <input matInput placeholder="City" formControlName="CityCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
+        <mat-error *ngIf="contactForm.controls.CityCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <mat-error *ngIf="contactForm.controls.CityCtrl.hasError('minlength')">Min 3 chars</mat-error>
+        <mat-error *ngIf="contactForm.controls.CityCtrl.hasError('required')">City Required</mat-error>
+        <mat-error *ngIf="contactForm.controls.CityCtrl.hasError('pattern')">Only letters are allowed</mat-error>
+        <mat-hint align="end">{{contactForm.controls.CityCtrl.value?.length || 0}} / 30</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field>
+        <input matInput placeholder="Pin Code" formControlName="PinCodeCtrl" required maxlength="6" minlength="6" pattern="^[0-9]*">
+        <mat-error *ngIf="contactForm.controls.PinCodeCtrl.hasError('maxlength')">Pincode Must be 6 digits</mat-error>
+        <mat-error *ngIf="contactForm.controls.PinCodeCtrl.hasError('minlength')">Min 6 digits</mat-error>
+        <mat-error *ngIf="contactForm.controls.PinCodeCtrl.hasError('required')">Pincode Required</mat-error>
+        <mat-error *ngIf="contactForm.controls.PinCodeCtrl.hasError('pattern')">Only numbers are allowed</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <mat-form-field>
+        <input matInput placeholder="Mobile" formControlName="MobileCtrl" required maxlength="10" minlength="10" pattern="^[0-9]*">
+        <mat-error *ngIf="contactForm.controls.MobileCtrl.hasError('maxlength')">Mobile Number must be of 10 digits</mat-error>
+        <mat-error *ngIf="contactForm.controls.MobileCtrl.hasError('minlength')">Mobile Number must be of 10 digits</mat-error>
+        <mat-error *ngIf="contactForm.controls.MobileCtrl.hasError('required')">Mobile Number required</mat-error>
+        <mat-error *ngIf="contactForm.controls.MobileCtrl.hasError('pattern')">Only numbers are allowed</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field>
+        <input matInput placeholder="Alternate Mobile" formControlName="ResidenceCtrl" maxlength="10" minlength="10" pattern="^[0-9]*">
+        <mat-error *ngIf="contactForm.controls.ResidenceCtrl.hasError('maxlength')">Mobile Number must be 10 digits</mat-error>
+        <mat-error *ngIf="contactForm.controls.ResidenceCtrl.hasError('minlength')">Mobile Number must be 10 digits</mat-error>
+        <mat-error *ngIf="contactForm.controls.ResidenceCtrl.hasError('pattern')">Only numbers are allowed</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!--<div class="col-md-3">
+    <pre>{{ contactForm.value | json }}</pre>
+  </div>-->
+  </div>
+
+</div> 

@@ -1,0 +1,297 @@
+<div style="top:10px;">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <b>Employee</b>
+      <button class="btn btn-success pull-right" [routerLink]="['/employee-list']"><b><i class="fas fa-list-ul"></i> View Employees</b></button>
+      <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <form [formGroup]="firstFormGroup" (ngSubmit)="submitEmployeeForm()" novalidate>
+          <mat-horizontal-stepper [linear]="isLinear" #stepper>
+            <mat-step>
+              <ng-template matStepLabel>Personal</ng-template>
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input matInput placeholder="First Name" formControlName="firstNameCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
+                    <mat-error *ngIf="firstNameCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+                    <mat-error *ngIf="firstNameCtrl.hasError('minlength')">Min 3 chars</mat-error>
+                    <mat-error *ngIf="firstNameCtrl.hasError('required')">First Name Required</mat-error>
+                    <mat-error *ngIf="firstNameCtrl.hasError('pattern')">Only letters are allowed</mat-error>
+                    <mat-hint align="end">{{firstNameCtrl.value?.length || 0}} / 30</mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input matInput placeholder="Middle Name" formControlName="middleNameCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
+                    <mat-error *ngIf="middleNameCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+                    <mat-error *ngIf="middleNameCtrl.hasError('minlength')">Min 3 chars</mat-error>
+                    <mat-error *ngIf="middleNameCtrl.hasError('required')">Middle Name Required</mat-error>
+                    <mat-error *ngIf="middleNameCtrl.hasError('pattern')">Only letters are allowed</mat-error>
+                    <mat-hint align="end">{{middleNameCtrl.value?.length || 0}} / 30</mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input matInput placeholder="Last Name" formControlName="lastNameCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
+                    <mat-error *ngIf="lastNameCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+                    <mat-error *ngIf="lastNameCtrl.hasError('minlength')">Min 3 chars</mat-error>
+                    <mat-error *ngIf="lastNameCtrl.hasError('required')">Last Name Required</mat-error>
+                    <mat-error *ngIf="lastNameCtrl.hasError('pattern')">Only letters are allowed</mat-error>
+                    <mat-hint align="end">{{lastNameCtrl.value?.length || 0}} / 30</mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input type="email" matInput placeholder="Email ID" formControlName="emailIdCtrl" required email maxlength="30">
+                    <mat-error *ngIf="emailIdCtrl.hasError('required')">Enter Email ID</mat-error>
+                    <mat-error *ngIf="emailIdCtrl.hasError('email')">Invalid Email ID</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput [min]="minDateDOB" [max]="maxDateDOB" [matDatepicker]="pickerDOB" formControlName="DOBCtrl" placeholder="Date Of Birth" required maxlength="10">
+                    <mat-datepicker-toggle matSuffix [for]="pickerDOB"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerDOB></mat-datepicker>
+                    <mat-error *ngIf="DOBCtrl.hasError('required')">Date Of Birth Required</mat-error>
+                    <mat-error *ngIf="DOBCtrl.hasError('matDatepickerParse')">Invalid Date</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput [min]="minDateDOJ" [max]="maxDateDOJ" [matDatepicker]="pickerDOJ" formControlName="DOJCtrl" placeholder="Date Of Joining" required maxlength="10">
+                    <mat-datepicker-toggle matSuffix [for]="pickerDOJ"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerDOJ></mat-datepicker>
+                    <mat-error *ngIf="DOJCtrl.hasError('required')">Date Of Joining Required</mat-error>
+                    <mat-error *ngIf="DOJCtrl.hasError('matDatepickerParse')">Invalid Date</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <!--<div class="col-md-6">
+                  <pre>{{ firstFormGroup.value | json }}</pre>
+                </div>-->
+              </div>
+              <div style="margin-top:50px">
+                <button mat-mini-fab matStepperNext color="accent" type="button" title="Next"><i class="fas fa-arrow-right"></i></button>
+              </div>
+            </mat-step>
+
+            <mat-step>
+              <ng-template matStepLabel>Address</ng-template>
+              <app-contact-resource [parentForm]="firstFormGroup.get('contact')"></app-contact-resource>
+
+              <div style="margin-top:50px">
+                <button mat-mini-fab matStepperPrevious color="primary" type="button" title="Back"><i class="fas fa-arrow-left"></i></button>&nbsp;
+                <button mat-mini-fab matStepperNext color="accent" type="button" title="Next"><i class="fas fa-arrow-right"></i></button>
+              </div>
+            </mat-step>
+
+            <mat-step>
+              <ng-template matStepLabel>Office</ng-template>
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <mat-select formControlName="selectDepartmentCtrl" placeholder="Choose Department" required>
+                      <mat-option [value]="">--Department--</mat-option>
+                      <mat-option *ngFor="let dep of Dep" [value]="dep.Id">
+                        {{ dep.Value }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="selectDepartmentCtrl.hasError('required')">Department required</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <mat-select formControlName="selectDesiginationCtrl" placeholder="Choose Desigination" required>
+                      <mat-option [value]="">--Desigination--</mat-option>
+                      <mat-option *ngFor="let des of Des" [value]="des.Id">
+                        {{ des.Value }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="selectDesiginationCtrl.hasError('required')">Desigination required</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <mat-select formControlName="selectGradeCtrl" placeholder="Choose Grade" required>
+                      <mat-option [value]="">--Grade--</mat-option>
+                      <mat-option *ngFor="let g of Grade" [value]="g.Id">
+                        {{ g.Value }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="selectGradeCtrl.hasError('required')">Grade required</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <mat-select formControlName="selectHQCtrl" placeholder="Choose HQ" required>
+                      <mat-option [value]="">--HQ--</mat-option>
+                      <mat-option *ngFor="let h of HQ" [value]="h.Id">
+                        {{ h.Value }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="selectHQCtrl.hasError('required')">HQ required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <mat-select formControlName="selectRegionCtrl" placeholder="Choose Region" multiple required>
+                      <mat-option *ngFor="let rgn of Region" [value]="rgn.Id">{{rgn.Value}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="selectRegionCtrl.hasError('required')">Region required</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input matInput placeholder="Pan Card" formControlName="PancardCtrl" required maxlength="15" pattern="^[A-Za-z0-9]*$">
+                    <mat-error *ngIf="PancardCtrl.hasError('required')">Pancard Required</mat-error>
+                    <mat-error *ngIf="PancardCtrl.hasError('pattern')">Only letters & numbers are allowed</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <!--<div class="col-md-6">
+                  <pre>{{ firstFormGroup.value | json }}</pre>
+                </div>-->
+              </div>
+
+              <div style="margin-top:50px">
+                <button mat-mini-fab matStepperPrevious color="primary" type="button" title="Back"><i class="fas fa-arrow-left"></i></button>&nbsp;
+                <button mat-mini-fab matStepperNext color="accent" type="button" title="Next"><i class="fas fa-arrow-right"></i></button>
+              </div>
+            </mat-step>
+
+            <mat-step>
+              <ng-template matStepLabel>Roles & Permissions</ng-template>
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <mat-select formControlName="selectRolesCtrl" (ngModelChange)="onRoleChange($event)" placeholder="Choose Role" required>
+                      <mat-option [value]="">--Role--</mat-option>
+                      <mat-option *ngFor="let role of RolesFor" [value]="role.value">
+                        {{ role.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="selectRolesCtrl.hasError('required')">Department required</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <mat-select formControlName="PermissionsForCtrl" placeholder="Permissions" multiple required>
+                      <mat-option *ngFor="let permission of PermissionsFor" [value]="permission">{{permission}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div style="margin-top:50px">
+                <button mat-mini-fab matStepperPrevious color="primary" type="button" title="Back"><i class="fas fa-arrow-left"></i></button>&nbsp;
+                <button mat-mini-fab matStepperNext color="accent" type="button" title="Next"><i class="fas fa-arrow-right"></i></button>
+              </div>
+            </mat-step>
+
+            <mat-step>
+              <ng-template matStepLabel>Done</ng-template>
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-card class="example-card" [style.color]="firstFormGroup.invalid ? 'red' : ''">
+                    <mat-card-header>
+                      <div mat-card-avatar><i class="fas fa-user"></i></div>
+                      <mat-card-title>Personal Details</mat-card-title>
+                      <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle> <i class="fas fa-user"></i>-->
+                    </mat-card-header>
+                    <mat-card-content>
+                      First Name: <b>{{firstNameCtrl.value}}</b><br />
+                      Middle Name: <b>{{middleNameCtrl.value}}</b><br />
+                      Last Name: <b>{{lastNameCtrl.value}}</b> <br />
+                      Email ID: <b>{{emailIdCtrl.value}}</b><br />
+                      Date of Birth: <b>{{DOBCtrl.value | date: 'dd-MMM-yyyy'}}</b><br />
+                      Date of Joining: <b>{{DOJCtrl.value| date: 'dd-MMM-yyyy'}}</b>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-card class="example-card" [style.color]="firstFormGroup.invalid ? 'red' : ''">
+                    <mat-card-header>
+                      <div mat-card-avatar><i class="fas fa-address-card"></i></div>
+                      <mat-card-title>Address</mat-card-title>
+                      <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle> <i class="fas fa-user"></i>-->
+                    </mat-card-header>
+                    <mat-card-content>
+                      Address: <b>{{AddressCtrl.value}}</b><br />
+                      State: <b>{{StateCtrl.value}}</b><br />
+                      City: <b>{{CityCtrl.value}}</b> <br />
+                      Pincode: <b>{{PinCodeCtrl.value}}</b><br />
+                      Mobile: <b>{{MobileCtrl.value}}</b><br />
+                      Alternate Number: <b>{{ResidenceCtrl.value}}</b>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-card class="example-card" [style.color]="firstFormGroup.invalid ? 'red' : ''">
+                    <mat-card-header>
+                      <div mat-card-avatar><i class="fas fa-building"></i></div>
+                      <mat-card-title>Office</mat-card-title>
+                      <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle> <i class="fas fa-user"></i>-->
+                    </mat-card-header>
+                    <mat-card-content>
+                      Department: <b>{{selectDepartmentCtrl.value}}</b><br />
+                      Desigination: <b>{{selectDesiginationCtrl.value}}</b><br />
+                      Grade: <b>{{selectGradeCtrl.value}}</b> <br />
+                      HQ: <b>{{selectHQCtrl.value}}</b><br />
+                      Region: <b>{{selectRegionCtrl.value}}</b><br />
+                      Pancard: <b>{{PancardCtrl.value}}</b>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-card class="example-card" [style.color]="firstFormGroup.invalid ? 'red' : ''">
+                    <mat-card-header>
+                      <div mat-card-avatar><i class="fas fa-user-lock"></i></div>
+                      <mat-card-title>Roles & Permissions</mat-card-title>
+                      <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle> <i class="fas fa-user"></i>-->
+                    </mat-card-header>
+                    <mat-card-content>
+                      Role: <b>{{selectRolesCtrl.value}}</b><br />
+                      Permissions: <b>{{PermissionsForCtrl.value}}</b><br />
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-md-push-5" style="margin-top:50px;">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!firstFormGroup.valid">Save Record</button>
+              </div>
+              <br />
+              <div style="margin-top:70px">
+                <button mat-mini-fab matStepperPrevious color="primary" type="button" title="Back"><i class="fas fa-arrow-left"></i></button>&nbsp;
+                <!--<button mat-mini-fab matStepperNext color="accent" (click)="stepper.reset()" type="button" title="Reset"><i class="fas fa-redo-alt"></i></button>-->
+              </div>
+            </mat-step>
+          </mat-horizontal-stepper>
+        </form>
+      </div>
+      <div class="clearfix"></div>      
+    </div>
+  </div>
+</div>
+
+<app-spinner *ngIf="showSpinner"></app-spinner>

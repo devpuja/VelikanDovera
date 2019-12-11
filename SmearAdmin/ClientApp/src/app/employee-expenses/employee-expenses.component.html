@@ -1,0 +1,117 @@
+<div style="top:10px;">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <b>Manage Expenses</b>
+      <button class="btn btn-success pull-right" [routerLink]="['/employee-expenses-list']"><b><i class="fas fa-list-ul"></i> View Expenses</b></button>
+      <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+      <form [formGroup]="expensesFormGroup" (ngSubmit)="submitEmployeeExpensesForm()" novalidate>
+        <div class="row">
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-select formControlName="PresentTypeCtrl" placeholder="Choose Type" (ngModelChange)="onPresentTypeChange($event)" required>
+                <mat-option *ngFor="let pt of PresentType" [value]="pt.Value">{{pt.Value}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="PresentTypeCtrl.hasError('required')">Present Type required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width">
+              <input matInput [min]="minDateExp" [max]="maxDateExp" [matDatepicker]="pickerExpDate" formControlName="ExpDateCtrl" placeholder="Date" required maxlength="10">
+              <mat-datepicker-toggle matSuffix [for]="pickerExpDate"></mat-datepicker-toggle>
+              <mat-datepicker #pickerExpDate></mat-datepicker>
+              <mat-error *ngIf="ExpDateCtrl.hasError('required')">Date Required</mat-error>
+              <mat-error *ngIf="ExpDateCtrl.hasError('matDatepickerParse')">Invalid Date</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput placeholder="HQ" value="{{HQValue}}" disabled="disabled">              
+              <!--<mat-select formControlName="HQCtrl" placeholder="Choose HQ" required>
+    <mat-option [value]="">--HQ--</mat-option>
+    <mat-option *ngFor="let h of HQ" [value]="h.Id">
+      {{ h.Value }}
+    </mat-option>
+  </mat-select>-->
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-select formControlName="RegionCtrl" placeholder="Choose Region" multiple required>
+                <mat-option *ngFor="let rgn of Region" [value]="rgn.Value">{{rgn.Value}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="RegionCtrl.hasError('required')">Region required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput placeholder="Bike Allowance" formControlName="BikeAllowanceCtrl" required maxlength="3" pattern="^[0-9]*">
+              <mat-error *ngIf="BikeAllowanceCtrl.hasError('required')">Bike Allowance Required</mat-error>
+              <mat-error *ngIf="BikeAllowanceCtrl.hasError('pattern')">Only Numbers are allowed</mat-error>
+              <mat-error *ngIf="BikeAllowanceCtrl.hasError('maxValue')">Allowance allowed is <b>{{Bike.Value}}</b> or less</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput placeholder="Daily Allowance" formControlName="DailyAllowanceCtrl" required maxlength="3" pattern="^[0-9]*">
+              <mat-error *ngIf="DailyAllowanceCtrl.hasError('required')">Daily Allowance Required</mat-error>
+              <mat-error *ngIf="DailyAllowanceCtrl.hasError('pattern')">Only Numbers are allowed</mat-error>
+              <mat-error *ngIf="DailyAllowanceCtrl.hasError('maxValue')">Allowance allowed is <b>{{Daily.Value}}</b> or less</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput placeholder="Other Amount" formControlName="OtherAmountCtrl" required maxlength="4" pattern="^[0-9]*">
+              <mat-error *ngIf="OtherAmountCtrl.hasError('required')">Other Amount Required</mat-error>
+              <mat-error *ngIf="OtherAmountCtrl.hasError('pattern')">Only Numbers are allowed</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <!--<mat-form-field>
+    <input matInput placeholder="Claim Amount" formControlName="ClaimAmountCtrl" required maxlength="3" minlength="1" pattern="^[0-9]*">
+    <mat-error *ngIf="ClaimAmountCtrl.hasError('required')">Claim Amount Required</mat-error>
+    <mat-error *ngIf="ClaimAmountCtrl.hasError('pattern')">Only Numbers are allowed</mat-error>
+  </mat-form-field>-->
+            <mat-form-field>
+              <textarea matInput placeholder="Remark" formControlName="EmployeeRemarkCtrl" maxlength="250" style="width:540px;"></textarea>
+              <mat-hint align="end">{{EmployeeRemarkCtrl.value?.length || 0}} / 250</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <!--<div class="col-md-6">
+            <mat-form-field>
+              <textarea matInput placeholder="Remark" formControlName="EmployeeRemarkCtrl" maxlength="250" style="width:540px;"></textarea>
+              <mat-hint align="end">{{EmployeeRemarkCtrl.value?.length || 0}} / 250</mat-hint>
+            </mat-form-field>
+          </div>-->
+
+          <div class="col-md-4">
+            <pre>{{expensesFormGroup.value | json}}</pre>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 col-md-push-5" style="margin-top:40px;">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!expensesFormGroup.valid">Save Record</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<app-spinner *ngIf="showSpinner"></app-spinner>

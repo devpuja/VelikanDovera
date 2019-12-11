@@ -1,0 +1,125 @@
+<div style="top:10px;">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <b>Employee List</b>
+      <button class="btn btn-success pull-right" [routerLink]="['/employee']"><b><i class="fas fa-plus-square"></i> Add Employee</b></button>
+      <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+      <!--<div class="row">
+        <div class="col-md-3">
+          <b>Filter:</b>
+          <mat-select placeholder="Choose" [formControl]="mastersControl" [(ngModel)]="selectedMaster" (selectionChange)="getValues()">
+            <mat-option>-- None --</mat-option>
+            <mat-optgroup *ngFor="let group of mastersGroups" [label]="group.name">
+              <mat-option *ngFor="let mst of group.mastersFor" [value]="mst.value">
+                {{mst.viewValue}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <br />-->
+
+      <div id="table">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%">
+          <ng-container matColumnDef="Img">
+            <th mat-header-cell *matHeaderCellDef> Img </th>
+            <td mat-cell *matCellDef="let element" style="padding-left:5px; width:90px;"><img src="{{element.PictureUrl}}" style="width:80px; height:80px;" class="imgFrame" /></td>
+          </ng-container>
+
+          <ng-container matColumnDef="FirstName">
+            <th mat-header-cell *matHeaderCellDef> Full Name </th>
+            <td mat-cell *matCellDef="let element">{{element.FirstName}} {{element.LastName}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="CustomUserName">
+            <th mat-header-cell *matHeaderCellDef> User Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.CustomUserName}} </td>
+          </ng-container>
+
+          <!--<ng-container matColumnDef="Email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+          </ng-container>-->
+
+          <ng-container matColumnDef="HQ">
+            <th mat-header-cell *matHeaderCellDef> HQ </th>
+            <td mat-cell *matCellDef="let element"> {{element.HQName}} <br />
+            <small style="font-style:italic">({{element.RegionName}})</small>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="DOJ">
+            <th mat-header-cell *matHeaderCellDef> DOJ </th>
+            <td mat-cell *matCellDef="let element"> {{element.DOJ | date: 'dd-MMM-yyyy'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Mobile">
+            <th mat-header-cell *matHeaderCellDef> Mobile </th>
+            <td mat-cell *matCellDef="let element"> {{element.Contact.MobileNumber}} </td>
+          </ng-container>
+
+          <!--<ng-container matColumnDef="Address">
+            <th mat-header-cell *matHeaderCellDef> Address </th>
+            <td mat-cell *matCellDef="let element"> {{element.Contact.Address}} </td>
+          </ng-container>-->
+
+          <ng-container matColumnDef="Role">
+            <th mat-header-cell *matHeaderCellDef> Role </th>
+            <td mat-cell *matCellDef="let element"> {{element.Roles.RoleName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Claims">
+            <th mat-header-cell *matHeaderCellDef> Claims </th>
+            <td mat-cell *matCellDef="let element"> {{element.Roles.UserClaimsOnRoles}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="Password">
+            <th mat-header-cell *matHeaderCellDef> Pwd </th>
+            <td mat-cell *matCellDef="let element"> {{element.Password}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="IsEnabled">
+            <th mat-header-cell *matHeaderCellDef> Enabled </th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="element.IsEnabled; then thenBlock; else elseBlock"> </div>
+              <ng-template #thenBlock>
+                <div class="yesno yes">Yes</div>
+              </ng-template>
+              <ng-template #elseBlock>
+                <div class="yesno no">No</div>
+              </ng-template>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="element.IsEnabled; then thenBlockDelete; else elseBlockDelete"> </div>
+              <ng-template #thenBlockDelete>
+                <i class="fas fa-edit" style="cursor:pointer;" title="Edit" (click)="onEdit(element)"></i>&nbsp;
+                <i class="fas fa-trash" style="cursor:pointer;" title="Delete" (click)="openDialogDelete(element,'delete')"></i>
+              </ng-template>
+              <ng-template #elseBlockDelete>
+                <i class="fas fa-undo" style="cursor:pointer;" title="Un Delete" (click)="openDialogDelete(element,'undelete')"></i>
+              </ng-template>              
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+          <mat-paginator #paginator
+                         [length]="totalItemsCount"
+                         [pageSize]="pageSize"
+                         [pageSizeOptions]="pageSizeOptions"
+                         showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-spinner *ngIf="showSpinner"></app-spinner>
