@@ -35,10 +35,30 @@ namespace SmearAdmin
     {
         private const string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; // todo: get this from somewhere secure
         private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+        private readonly IHostingEnvironment _env;
 
-        public Startup(IConfiguration configuration)
+        //public Startup(IConfiguration configuration)
+        //{
+        //    Configuration = configuration;
+        //}
+
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            _env = env;
+            var builder = new ConfigurationBuilder();
+            
+            if(_env.IsDevelopment())
+            {
+                builder.SetBasePath(env.ContentRootPath)
+                    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+            }
+            else
+            {
+                builder.SetBasePath(env.ContentRootPath)
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            }
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }

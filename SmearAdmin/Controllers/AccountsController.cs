@@ -42,6 +42,7 @@ namespace SmearAdmin.Controllers
             //}
 
             await InBuildAdminAsync();
+
             await InBuildUserAsync();
 
             #region "Create User, Roles & Add User Claims"
@@ -93,29 +94,31 @@ namespace SmearAdmin.Controllers
 
         private async Task InBuildUserAsync()
         {
-            RegistrationViewModel model = new RegistrationViewModel();
-            model.FirstName = "Dev";
-            model.MiddleName = "Vikram";
-            model.LastName = "Sharma";
-            model.Email = "devuser@smear.com";
-            model.Password = "dev@123";
-            model.Department = 0;
-            model.Grade = 0;
-            model.HQ = 0;
-            model.Pancard = "Dummy";
-            model.DOJ = DateTime.Now;
-            model.DOB = DateTime.Now;
-            model.Desigination = 0;
-            model.CustomUserName = "Dummy";
-            model.PasswordRaw = "dev@123";
-            model.IsEnabled = true;
+            RegistrationViewModel model = new RegistrationViewModel
+            {
+                FirstName = "Dev",
+                MiddleName = "Vikram",
+                LastName = "Sharma",
+                Email = "devuser@smear.com",
+                Password = "dev@123",
+                Department = 0,
+                Grade = 0,
+                HQ = 0,
+                Pancard = "Dummy",
+                DOJ = DateTime.Now,
+                DOB = DateTime.Now,
+                Desigination = 0,
+                CustomUserName = "Dummy",
+                PasswordRaw = "dev@123",
+                IsEnabled = true
+            };
 
             string userName = model.FirstName.Substring(0, 1).ToLower() + model.MiddleName.Substring(0, 1).ToLower() + model.LastName.Replace(" ", "").ToLower();
             int iUserNameCount = _appDbContext.Users.Where(u => u.UserName.Contains(userName)).ToList().Count();
             if (iUserNameCount > 0)
             {
                 iUserNameCount += 1;
-                userName = userName + iUserNameCount.ToString();
+                userName += iUserNameCount.ToString();
             }
 
             model.CustomUserName = userName;
@@ -154,15 +157,18 @@ namespace SmearAdmin.Controllers
             //if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
             //Extra Tables
-            ContactResourseViewModel contact = new ContactResourseViewModel();
-            contact.RefTableId = user.Id;
-            contact.RefTableName = Constants.ReferenceTableNames.EMPLOYEE;
-            contact.Address = "Dev User Address";
-            contact.State = "Dev User State";
-            contact.City = "Dev User City";
-            contact.PinCode = "400086";
-            contact.MobileNumber = "9029718964";
-            contact.ResidenceNumber = "9090909090";
+            ContactResourseViewModel contact = new ContactResourseViewModel
+            {
+                ID = Guid.NewGuid().ToString(),
+                RefTableId = user.Id,
+                RefTableName = Constants.ReferenceTableNames.EMPLOYEE,
+                Address = "Dev User Address",
+                State = "Dev User State",
+                City = "Dev User City",
+                PinCode = "400086",
+                MobileNumber = "9029718964",
+                ResidenceNumber = "9090909090"
+            };
 
             var contactData = _mapper.Map<ContactResourseViewModel, Data.ContactResourse>(contact);
             _appDbContext.ContactResourse.Add(contactData);
@@ -172,29 +178,31 @@ namespace SmearAdmin.Controllers
 
         private async Task InBuildAdminAsync()
         {
-            RegistrationViewModel model = new RegistrationViewModel();
-            model.FirstName = "Dev";
-            model.MiddleName = "Vikram";
-            model.LastName = "Sharma";
-            model.Email = "devadmin@smear.com";
-            model.Password = "dev@123";
-            model.Department = 0;
-            model.Grade = 0;
-            model.HQ = 0;
-            model.Pancard = "Dummy";
-            model.DOJ = DateTime.Now;
-            model.DOB = DateTime.Now;
-            model.Desigination = 0;
-            model.CustomUserName = "Dummy";
-            model.PasswordRaw = "dev@123";
-            model.IsEnabled = true;
+            RegistrationViewModel model = new RegistrationViewModel
+            {
+                FirstName = "Dev",
+                MiddleName = "Vikram",
+                LastName = "Sharma",
+                Email = "devadmin@smear.com",
+                Password = "dev@123",
+                Department = 0,
+                Grade = 0,
+                HQ = 0,
+                Pancard = "Dummy",
+                DOJ = DateTime.Now,
+                DOB = DateTime.Now,
+                Desigination = 0,
+                CustomUserName = "Dummy",
+                PasswordRaw = "dev@123",
+                IsEnabled = true
+            };
 
             string userName = model.FirstName.Substring(0, 1).ToLower() + model.MiddleName.Substring(0, 1).ToLower() + model.LastName.Replace(" ", "").ToLower();
             int iUserNameCount = _appDbContext.Users.Where(u => u.UserName.Contains(userName)).ToList().Count();
-            if (iUserNameCount > 0)
+            if(iUserNameCount > 0)
             {
                 iUserNameCount += 1;
-                userName = userName + iUserNameCount.ToString();
+                userName += iUserNameCount.ToString();
             }
 
             model.CustomUserName = userName;
@@ -207,10 +215,10 @@ namespace SmearAdmin.Controllers
             #region "Create User, Roles & Add Role Claims"
             //Admin: Data in Roles Table
             var adminRole = await _roleManager.FindByNameAsync(Permissions.Roles.ADMIN);
-            if (adminRole == null)
+            if(adminRole == null)
             {
                 adminRole = new IdentityRole(Permissions.Roles.ADMIN);
-                await _roleManager.CreateAsync(adminRole);                
+                await _roleManager.CreateAsync(adminRole);
             }
 
             //await _roleManager.AddClaimAsync(adminRole, new Claim(CustomClaimTypes.Permission, Permissions.Admins.CRUD));
@@ -218,28 +226,30 @@ namespace SmearAdmin.Controllers
             ////Add UserClaims
             await _userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.Permission, Permissions.Admins.CRUD));
 
-            if (!await _userManager.IsInRoleAsync(user, adminRole.Name))
+            if(!await _userManager.IsInRoleAsync(user, adminRole.Name))
             {
                 await _userManager.AddToRoleAsync(user, adminRole.Name);
             }
             #endregion
 
             //Extra Tables
-            ContactResourseViewModel contact = new ContactResourseViewModel();
-            contact.RefTableId = user.Id;
-            contact.RefTableName = Constants.ReferenceTableNames.EMPLOYEE;
-            contact.Address = "Dev Admin Address";
-            contact.State = "Dev Admin State";
-            contact.City = "Dev Admin City";
-            contact.PinCode = "400086";
-            contact.MobileNumber = "9029718964";
-            contact.ResidenceNumber = "9090909090";
+            ContactResourseViewModel contact = new ContactResourseViewModel
+            {
+                ID = Guid.NewGuid().ToString(),
+                RefTableId = user.Id,
+                RefTableName = Constants.ReferenceTableNames.EMPLOYEE,
+                Address = "Dev Admin Address",
+                State = "Dev Admin State",
+                City = "Dev Admin City",
+                PinCode = "400086",
+                MobileNumber = "9029718964",
+                ResidenceNumber = "9090909090"
+            };
 
-            var contactData = _mapper.Map<ContactResourseViewModel,Data.ContactResourse>(contact);
+            var contactData = _mapper.Map<ContactResourseViewModel, Data.ContactResourse>(contact);
             _appDbContext.ContactResourse.Add(contactData);
 
             await _appDbContext.SaveChangesAsync();
-
         }
 
         [HttpPost("ChangePwd")]
