@@ -7,7 +7,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-
+  
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
@@ -15,6 +15,7 @@
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+    
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
@@ -33,31 +34,34 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.1.0" />
     <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="DinkToPdfIncludesDependencies" Version="1.0.8" />
     <PackageReference Include="DotNetCorePdf-Standard2.0" Version="2.0.1" />
     <PackageReference Include="EPPlus" Version="4.5.3.2" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="8.0.100" />
-    <PackageReference Include="Humanizer" Version="2.5.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.0" />
+    <PackageReference Include="Humanizer" Version="2.7.9" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.3">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
-    <PackageReference Include="Microsoft.TypeScript.Compiler" Version="3.1.1">
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.0" />
+    <PackageReference Include="Microsoft.TypeScript.Compiler" Version="3.1.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
@@ -129,16 +133,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="obj\Debug\netcoreapp2.1\SmearAdmin.AssemblyInfo.cs" />
-    <Compile Include="obj\Debug\netcoreapp2.1\SmearAdmin.RazorAssemblyInfo.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="libwkhtmltox.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="obj\project.assets.json" />
-    <Content Include="obj\SmearAdmin.csproj.nuget.dgspec.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -156,20 +153,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="bin\Debug\netcoreapp2.1\" />
     <Folder Include="ClientApp\src\app\pipes\" />
     <Folder Include="wwwroot\Downloads\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="obj\Debug\netcoreapp2.1\SmearAdmin.AssemblyInfoInputs.cache" />
-    <None Include="obj\Debug\netcoreapp2.1\SmearAdmin.assets.cache" />
-    <None Include="obj\Debug\netcoreapp2.1\SmearAdmin.csproj.CoreCompileInputs.cache" />
-    <None Include="obj\Debug\netcoreapp2.1\SmearAdmin.csprojAssemblyReference.cache" />
-    <None Include="obj\Debug\netcoreapp2.1\SmearAdmin.RazorAssemblyInfo.cache" />
-    <None Include="obj\SmearAdmin.csproj.nuget.cache" />
-    <None Include="obj\SmearAdmin.csproj.nuget.g.props" />
-    <None Include="obj\SmearAdmin.csproj.nuget.g.targets" />
     <None Include="wwwroot\AssetsPdf\pdfStyle.css" />
   </ItemGroup>
 
@@ -192,7 +180,7 @@
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build --prod" />
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
 
     <!-- Include the newly-built files in the publish output -->
