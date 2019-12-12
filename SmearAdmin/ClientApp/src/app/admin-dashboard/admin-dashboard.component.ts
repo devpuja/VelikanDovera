@@ -36,7 +36,7 @@ export class AdminDashboardComponent implements OnInit {
                         this.toastr.success("Record Loaded", "Success");
                     }
                 },
-                error => this.toastr.error(error, "Error"));
+                errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
     }
 
     navigate(exp) {
@@ -54,7 +54,7 @@ export class AdminDashboardComponent implements OnInit {
                         this.toastr.success("Record Loaded", "Success");
                     }
                 },
-                error => this.toastr.error(error, "Error"));
+                errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
     }
 
     bindSMSValues(smsData) {

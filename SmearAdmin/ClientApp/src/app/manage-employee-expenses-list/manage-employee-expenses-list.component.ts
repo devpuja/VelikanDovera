@@ -20,182 +20,182 @@ import { ConfigService } from '../shared/utils/config.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-manage-employee-expenses-list',
-  templateUrl: './manage-employee-expenses-list.component.html',
-  styleUrls: ['./manage-employee-expenses-list.component.css']
+    selector: 'app-manage-employee-expenses-list',
+    templateUrl: './manage-employee-expenses-list.component.html',
+    styleUrls: ['./manage-employee-expenses-list.component.css']
 })
 export class ManageEmployeeExpensesListComponent implements OnInit {
-  showSpinner: boolean = false;  
-  userName: string;
-  userNameList: string[] = [];
-  monthYear: string;  
-  monthYearList: string[] = [];
-  totalItemsCount: number = 0;
+    showSpinner: boolean = false;
+    userName: string;
+    userNameList: string[] = [];
+    monthYear: string;
+    monthYearList: string[] = [];
+    totalItemsCount: number = 0;
 
-  baseUrl: string = '';
+    baseUrl: string = '';
 
-  empExpensesStatus: EmployeeExpensesStatus =
-    {
-      ID: 0,
-      UserName: '',
-      ExpenseMonth: '',
-      Status: 0,
-      FullName: '',
-    };
+    empExpensesStatus: EmployeeExpensesStatus =
+        {
+            ID: 0,
+            UserName: '',
+            ExpenseMonth: '',
+            Status: 0,
+            FullName: '',
+        };
 
-  dataSource: EmployeeExpensesDataSource;
-  displayedColumns = ['index', 'PresentType', 'ExpenseMonth', 'Date', 'HQ', 'Allowance', 'ClaimAmount', 'EmployeeRemark', 'ApprovedAmount', 'ApproverRemark', 'action'];
+    dataSource: EmployeeExpensesDataSource;
+    displayedColumns = ['index', 'PresentType', 'ExpenseMonth', 'Date', 'HQ', 'Allowance', 'ClaimAmount', 'EmployeeRemark', 'ApprovedAmount', 'ApproverRemark', 'action'];
 
-  constructor(public dialog: MatDialog, private _formBuilder: FormBuilder, private adminService: AdminService, private userService: UserService,
-    private toastr: ToastrService, private activatedRoute: ActivatedRoute, private configService: ConfigService) {
-    this.baseUrl = this.configService.getApiURI();
-  }
-
-  ngOnInit() {
-    this.SetUserMonthYear();
-    this.LoadUserNames();
-
-    //Check Urls
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.userName = params['user'];
-      this.monthYear = params['month'];
-    });
-    
-    if (this.userName != undefined && this.monthYear != undefined) {
-      this.findExpense();
-    }  
-  }
-
-  SetUserMonthYear() {
-    this.userName = this.userService.getUserName();
-
-    let today = new Date();
-    let moyr = "";
-    let month = today.getMonth() + 1;
-
-    for (var i = 0; i <= 3; i++) {
-      if (i == 0) {
-        moyr = month + "-" + today.getFullYear();
-      }
-      else
-        moyr = month - i + "-" + today.getFullYear();
-
-      this.monthYearList.push(moyr);
+    constructor(public dialog: MatDialog, private _formBuilder: FormBuilder, private adminService: AdminService, private userService: UserService,
+        private toastr: ToastrService, private activatedRoute: ActivatedRoute, private configService: ConfigService) {
+        this.baseUrl = this.configService.getApiURI();
     }
-  }
 
-  LoadUserNames() {
-    this.showSpinner = true;
-    this.adminService.getAllEmployeeUserName()
-      .finally(() => this.showSpinner = false)
-      .subscribe(
-        result => {
-          if (result) {
-            this.userNameList = result;
-          }
-        },
-        error => this.toastr.error(error, "Error"));
-  }
+    ngOnInit() {
+        this.SetUserMonthYear();
+        this.LoadUserNames();
 
-  changeUser(event) {
-    this.userName = (event.value === undefined) ? this.userName : event.value;
-  }
+        //Check Urls
+        this.activatedRoute.queryParams.subscribe(params => {
+            this.userName = params['user'];
+            this.monthYear = params['month'];
+        });
 
-  changeMonth(event) {
-    this.monthYear = (event.value === undefined) ? this.monthYear : event.value;
-  }
+        if (this.userName != undefined && this.monthYear != undefined) {
+            this.findExpense();
+        }
+    }
 
-  findExpense() {
-    this.showSpinner = true;   
-    this.adminService.getEmployeeExpenses(this.userName, this.monthYear)
-      .finally(() => this.showSpinner = false)
-      .subscribe(
-        result => {
-          if (result) {
-            this.dataSource = new EmployeeExpensesDataSource(result);
-            this.totalItemsCount = result.length;
+    SetUserMonthYear() {
+        this.userName = this.userService.getUserName();
 
-            this.toastr.success("Records Loaded", "Success");
-          }
-        },
-        error => this.toastr.error(error, "Error"));
-  }
+        let today = new Date();
+        let moyr = "";
+        let month = today.getMonth() + 1;
 
-  saveEmployeeExpense(empExp) {
-    //Check if ApprovedAmount is Number only
-    empExp.ApprovedBy = this.userService.getFullName();
-
-    var isAmtNbr = Number(empExp.ApprovedAmount);
-    if (!isNaN(isAmtNbr)) {
-      empExp.ApprovedAmount = isAmtNbr;
-
-      this.showSpinner = true;   
-      this.adminService.saveEmployeeExpenses(empExp)
-        .finally(() => this.showSpinner = false)
-        .subscribe(
-          result => {
-            if (result) {
-              this.toastr.success("Records Loaded", "Success");
+        for (var i = 0; i <= 3; i++) {
+            if (i == 0) {
+                moyr = month + "-" + today.getFullYear();
             }
-          },
-          error => this.toastr.error(error, "Error"));
+            else
+                moyr = month - i + "-" + today.getFullYear();
+
+            this.monthYearList.push(moyr);
+        }
     }
-    else {
-      this.toastr.error("Incorrect Amount Entered.", "Error");
+
+    LoadUserNames() {
+        this.showSpinner = true;
+        this.adminService.getAllEmployeeUserName()
+            .finally(() => this.showSpinner = false)
+            .subscribe(
+                result => {
+                    if (result) {
+                        this.userNameList = result;
+                    }
+                },
+                errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
     }
-  }
 
-  closeExpense() {
-    this.showSpinner = true;   
-    this.empExpensesStatus.UserName = this.userName;
-    this.empExpensesStatus.ExpenseMonth = this.monthYear;
+    changeUser(event) {
+        this.userName = (event.value === undefined) ? this.userName : event.value;
+    }
 
-    this.adminService.closeEmployeeExpenses(this.empExpensesStatus)
-      .finally(() => this.showSpinner = false)
-      .subscribe(
-        result => {
-          if (result) {
-            this.toastr.success("Records Loaded", "Success");
-          }
-        },
-        error => this.toastr.error(error, "Error"));
-  }
+    changeMonth(event) {
+        this.monthYear = (event.value === undefined) ? this.monthYear : event.value;
+    }
 
-  generatePdf() {
-    this.showSpinner = true;
+    findExpense() {
+        this.showSpinner = true;
+        this.adminService.getEmployeeExpenses(this.userName, this.monthYear)
+            .finally(() => this.showSpinner = false)
+            .subscribe(
+                result => {
+                    if (result) {
+                        this.dataSource = new EmployeeExpensesDataSource(result);
+                        this.totalItemsCount = result.length;
 
-    this.empExpensesStatus.UserName = this.userName;
-    this.empExpensesStatus.ExpenseMonth = this.monthYear;
+                        this.toastr.success("Records Loaded", "Success");
+                    }
+                },
+                errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
+    }
 
-    this.adminService.generatePdfEmployeeExpense(this.userName, this.monthYear)
-      .finally(() => this.showSpinner = false)
-      .subscribe(
-        result => {
-          var url = this.baseUrl.toString() + "downloads/" + result.FileName;
-          const downloadLink = document.createElement("a");
-          downloadLink.style.display = "none";
-          document.body.appendChild(downloadLink);
-          downloadLink.setAttribute("href", url);
-          downloadLink.setAttribute("download", result.FileName); //downloads by browser
-          downloadLink.setAttribute("target", "_blank");
-          downloadLink.click();
-          document.body.removeChild(downloadLink);
+    saveEmployeeExpense(empExp) {
+        //Check if ApprovedAmount is Number only
+        empExp.ApprovedBy = this.userService.getFullName();
 
-          this.toastr.success("Records Loaded", "Success");
-        },
-        error => this.toastr.error(error, "Error"));
-  }
+        var isAmtNbr = Number(empExp.ApprovedAmount);
+        if (!isNaN(isAmtNbr)) {
+            empExp.ApprovedAmount = isAmtNbr;
+
+            this.showSpinner = true;
+            this.adminService.saveEmployeeExpenses(empExp)
+                .finally(() => this.showSpinner = false)
+                .subscribe(
+                    result => {
+                        if (result) {
+                            this.toastr.success("Records Loaded", "Success");
+                        }
+                    },
+                    errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
+        }
+        else {
+            this.toastr.error("Incorrect Amount Entered.", "Error");
+        }
+    }
+
+    closeExpense() {
+        this.showSpinner = true;
+        this.empExpensesStatus.UserName = this.userName;
+        this.empExpensesStatus.ExpenseMonth = this.monthYear;
+
+        this.adminService.closeEmployeeExpenses(this.empExpensesStatus)
+            .finally(() => this.showSpinner = false)
+            .subscribe(
+                result => {
+                    if (result) {
+                        this.toastr.success("Records Loaded", "Success");
+                    }
+                },
+                errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
+    }
+
+    generatePdf() {
+        this.showSpinner = true;
+
+        this.empExpensesStatus.UserName = this.userName;
+        this.empExpensesStatus.ExpenseMonth = this.monthYear;
+
+        this.adminService.generatePdfEmployeeExpense(this.userName, this.monthYear)
+            .finally(() => this.showSpinner = false)
+            .subscribe(
+                result => {
+                    var url = this.baseUrl.toString() + "downloads/" + result.FileName;
+                    const downloadLink = document.createElement("a");
+                    downloadLink.style.display = "none";
+                    document.body.appendChild(downloadLink);
+                    downloadLink.setAttribute("href", url);
+                    downloadLink.setAttribute("download", result.FileName); //downloads by browser
+                    downloadLink.setAttribute("target", "_blank");
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+
+                    this.toastr.success("Records Loaded", "Success");
+                },
+                errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
+    }
 }
 
 export class EmployeeExpensesDataSource extends DataSource<EmployeeExpenses> {
-  constructor(private data: EmployeeExpenses[]) {
-    super();
-  }
+    constructor(private data: EmployeeExpenses[]) {
+        super();
+    }
 
-  connect(collectionViewer: CollectionViewer): Observable<EmployeeExpenses[]> {
-    return Observable.of(this.data);
-  }
+    connect(collectionViewer: CollectionViewer): Observable<EmployeeExpenses[]> {
+        return Observable.of(this.data);
+    }
 
-  disconnect(collectionViewer: CollectionViewer): void {
-  }
+    disconnect(collectionViewer: CollectionViewer): void {
+    }
 }

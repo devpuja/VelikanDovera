@@ -31,7 +31,7 @@ namespace SmearAdmin.Controllers
         private readonly IHostingEnvironment _host;
 
         private readonly int MAX_BYTES = 2 * 1024 * 1024; //2 MB (2097152)
-        private readonly string[] ACCEPTED_FILE_TYPES = new[] { ".jpg", ".jpeg", ".png"};
+        private readonly string[] ACCEPTED_FILE_TYPES = new[] { ".jpg", ".jpeg", ".png", ".JPG", ".JPEG", ".PNG" };
 
         public EmployeeController(IMapper mapper, IUnitOfWork UnitOfWork, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager,
             IHostingEnvironment host)
@@ -434,8 +434,7 @@ namespace SmearAdmin.Controllers
                     if (!Directory.Exists(uploadFolderPath))
                         Directory.CreateDirectory(uploadFolderPath);
 
-                    //var fileName = userData.UserName + "_" + Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
-                    var fileName = userData.UserName + Path.GetExtension(formFile.FileName);
+                    var fileName = userData.UserName + "_" + Guid.NewGuid().ToString("N") + Path.GetExtension(formFile.FileName);
                     var filePath = Path.Combine(uploadFolderPath, fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))

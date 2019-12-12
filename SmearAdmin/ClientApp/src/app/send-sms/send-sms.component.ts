@@ -71,7 +71,7 @@ export class SendSmsComponent implements OnInit {
                         this.toastr.success("Records Loaded", "Success");
                     }
                 },
-                error => this.toastr.error(error, "Error"));
+                errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
     }
 
     onAddMobileNumber(doctor: Doctor) {
@@ -103,7 +103,7 @@ export class SendSmsComponent implements OnInit {
                             this.toastr.warning("Fail To Send SMS", "Success");
                         }
                     },
-                    error => { debugger; this.toastr.error(error.message, "Error"); this.toastr.error(error.error.message, "Error"); });
+                    error => { this.toastr.error(error.message, "Error"); this.toastr.error(error.error.message, "Error"); });
         }
     }
 }

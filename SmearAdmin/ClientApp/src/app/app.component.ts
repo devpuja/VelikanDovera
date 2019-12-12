@@ -6,48 +6,49 @@ import { UserService } from './shared/services/user.service';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [UserService]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    providers: [UserService]
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'app';
+    title = 'app';
 
-  mobileQuery: MediaQueryList;
-  status: boolean;
-  subscription: Subscription;
+    mobileQuery: MediaQueryList;
+    status: boolean;
+    subscription: Subscription;
 
-  private _mobileQueryListener: () => void;
+    private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private userService: UserService, private router: Router) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private userService: UserService, private router: Router) {
+        this.mobileQuery = media.matchMedia('(max-width: 600px)');
 
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);   
-  }
+        this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+        this.mobileQuery.addListener(this._mobileQueryListener);
+    }
 
-  ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
-    this.subscription.unsubscribe();
-  }
+    ngOnDestroy(): void {
+        this.mobileQuery.removeListener(this._mobileQueryListener);
+        this.subscription.unsubscribe();
+    }
 
-  onLogout() {
-    this.userService.logout();
-  }
+    onLogout() {
+        this.userService.logout();
+    }
 
-  ngOnInit() {
-    this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status);
-  }
+    ngOnInit() {
+        this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status);
+    }
 
-  @HostListener('window:unload', ['$event'])
-  unloadHandler(event) {
-    this.onLogout();
-  }
+    @HostListener('window:unload', ['$event'])
+    unloadHandler(event) {
+        return true;
+        //this.onLogout();
+    }
 
-  //@HostListener('window:beforeunload', ['$event'])
-  //beforeUnloadHander(event) {
-  //  return false;
-  //}
+    //@HostListener('window:beforeunload', ['$event'])
+    //beforeUnloadHander(event) {
+    //  return false;
+    //}
 
 }
