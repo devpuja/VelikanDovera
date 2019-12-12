@@ -434,7 +434,8 @@ namespace SmearAdmin.Controllers
                     if (!Directory.Exists(uploadFolderPath))
                         Directory.CreateDirectory(uploadFolderPath);
 
-                    var fileName = userData.UserName + "_" + Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
+                    //var fileName = userData.UserName + "_" + Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
+                    var fileName = userData.UserName + Path.GetExtension(formFile.FileName);
                     var filePath = Path.Combine(uploadFolderPath, fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
