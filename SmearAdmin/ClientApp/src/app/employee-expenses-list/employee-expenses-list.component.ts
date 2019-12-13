@@ -117,83 +117,81 @@ export class EmployeeExpensesListComponent implements OnInit {
         error => this.toastr.error(error, "Error"));
   }
 
-  generatePdf() {
-    this.showSpinner = true;
+    generatePdf() {
+        this.showSpinner = true;
 
-    this.empExpensesStatus.UserName = this.userName;
-    this.empExpensesStatus.ExpenseMonth = this.monthYear;
+        this.empExpensesStatus.UserName = this.userName;
+        this.empExpensesStatus.ExpenseMonth = this.monthYear;
 
-    this.empExpService.generatePdfEmployeeExpense(this.userName, this.monthYear)
-      .finally(() => this.showSpinner = false)
-      .subscribe(
-        result => {
-          var url = this.baseUrl.toString() + "downloads/" + result.FileName;
-          const downloadLink = document.createElement("a");
-          downloadLink.style.display = "none";
-          document.body.appendChild(downloadLink);
-          downloadLink.setAttribute("href", url);
-          downloadLink.setAttribute("download", result.FileName); //downloads by browser
-          downloadLink.setAttribute("target", "_blank");
-          downloadLink.click();
-          document.body.removeChild(downloadLink);
+        this.empExpService.generatePdfEmployeeExpense(this.userName, this.monthYear)
+            .finally(() => this.showSpinner = false)
+            .subscribe(
+                result => {
+                    var url = this.baseUrl.toString() + "downloads/" + result.FileName;
+                    const downloadLink = document.createElement("a");
+                    downloadLink.style.display = "none";
+                    document.body.appendChild(downloadLink);
+                    downloadLink.setAttribute("href", url);
+                    downloadLink.setAttribute("download", result.FileName); //downloads by browser
+                    downloadLink.setAttribute("target", "_blank");
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
 
-          this.toastr.success("Records Loaded", "Success");
-        },
-        error => this.toastr.error(error, "Error"));
-  }
-
-  submitExpense() {
-    this.empExpensesStatus.UserName = this.userName;
-    this.empExpensesStatus.ExpenseMonth = this.monthYear;
-
-    if (this.totalItemsCount <= 0) {
-      this.toastr.error("No expenses entered for month " + this.monthYear, "Error");
+                    this.toastr.success("Records Loaded", "Success");
+                },
+                errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
     }
-    else {
-      this.showSpinner = true;
-      this.empExpService.submitEmployeeExpenses(this.empExpensesStatus)
-      .finally(() => this.showSpinner = false)
-      .subscribe(
-        result => {
-          if (result) {
-            this.getValues(this.monthYear);
-            this.toastr.success("Record Submitted", "Success");
-          }
-        },
-        error => this.toastr.error(error, "Error"));
+
+    submitExpense() {
+        this.empExpensesStatus.UserName = this.userName;
+        this.empExpensesStatus.ExpenseMonth = this.monthYear;
+
+        if (this.totalItemsCount <= 0) {
+            this.toastr.error("No expenses entered for month " + this.monthYear, "Error");
+        }
+        else {
+            this.showSpinner = true;
+            this.empExpService.submitEmployeeExpenses(this.empExpensesStatus)
+                .finally(() => this.showSpinner = false)
+                .subscribe(
+                    result => {
+                        if (result) {
+                            this.getValues(this.monthYear);
+                            this.toastr.success("Record Submitted", "Success");
+                        }
+                    },
+                    errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
+        }
     }
-  }
 
-  onDelete(ID: number) {
-    this.showSpinner = true;
-    this.empExpService.deleteEmployeeExpenses(ID)
-      .finally(() => this.showSpinner = false)
-      .subscribe(
-        result => {
-          if (result) {
-            this.getValues(this.monthYear);
-            this.toastr.success("Record Deleted", "Success");
-          }
-        },
-        error => this.toastr.error(error, "Error"));
-  }
+    onDelete(ID: number) {
+        this.showSpinner = true;
+        this.empExpService.deleteEmployeeExpenses(ID)
+            .finally(() => this.showSpinner = false)
+            .subscribe(
+                result => {
+                    if (result) {
+                        this.getValues(this.monthYear);
+                        this.toastr.success("Record Deleted", "Success");
+                    }
+                },
+                errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
+    }
 
-  openDialogDelete(ID: number): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px'
-    });
+    openDialogDelete(ID: number): void {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            width: '250px'
+        });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.onDelete(ID);
-      }
-      else {
-        this.toastr.show("Delete operation cancelled.");
-      }
-    });
-  }
-
-
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.onDelete(ID);
+            }
+            else {
+                this.toastr.show("Delete operation cancelled.");
+            }
+        });
+    }
 }
 
 export class EmployeeExpensesDataSource extends DataSource<EmployeeExpenses> {

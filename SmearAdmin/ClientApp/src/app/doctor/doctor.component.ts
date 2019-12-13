@@ -238,7 +238,7 @@ export class DoctorComponent implements OnInit {
             this.BindDoctorValues(this.docData);
           }
         },
-        error => this.toastr.error(error, "Error"));
+          errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
   }
 
   BindDoctorValues(doc: Doctor) {
