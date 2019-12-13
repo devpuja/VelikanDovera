@@ -49,6 +49,9 @@ export class EmployeeDashboardComponent implements OnInit {
     photoFormGroup: FormGroup;
     passwordFormGroup: FormGroup;
 
+    userID: string;
+    userName: string;
+
     //Photos Upload
     filePhoto: ElementRef; //use if seperate upload button is needed
     selectedFile: File = null;
@@ -65,14 +68,7 @@ export class EmployeeDashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        var userID = this.userService.getUserID();
-        var userName = this.userService.getUserName();
-
-        if (userID != null) {
-            this.fetchUserDetails(userID);
-        }
-
-        this.employeeExpenseNotify(userName);
+        this.getUserDetails();
 
         this.photoFormGroup = this._formBuilder.group({});
 
@@ -83,6 +79,17 @@ export class EmployeeDashboardComponent implements OnInit {
 
     get PasswordCtrl() { return this.passwordFormGroup.get('PasswordCtrl'); }
 
+    getUserDetails() {
+        this.userID = this.userService.getUserID();
+        this.userName = this.userService.getUserName();
+
+        if (this.userID != null) {
+            this.fetchUserDetails(this.userID);
+        }
+
+        this.employeeExpenseNotify(this.userName);
+    }
+
     fetchUserDetails(userID: string) {
         this.showSpinner = true;
         this.empService.getEmployeeByID(userID)
@@ -90,7 +97,7 @@ export class EmployeeDashboardComponent implements OnInit {
             .subscribe(
                 result => {
                     if (result) {
-                        console.log(result);
+                        //console.log(result);
                         //this.empData = result.Item1;
                         this.empData = result.Item1;
                         this.Daily = result.Item2;
@@ -194,6 +201,8 @@ export class EmployeeDashboardComponent implements OnInit {
                         event => {
                             this.handleProgress(event);
                             this.toastr.success("Profile picture updated successfully.", "Success");
+                            this.getUserDetails();
+                            //this.reloadPage();
                         },
                         errors => {
                             this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error");
@@ -207,14 +216,12 @@ export class EmployeeDashboardComponent implements OnInit {
         else {
             this.toastr.error("Allowed file type *.jpg,*.jpeg & *.png", "Error");
         }
-
-        this.reloadPage();
     }
 
-    reloadPage() { // click handler or similar
-        this.zone.runOutsideAngular(() => {
-            location.reload();
-        });
-    }
+    //reloadPage() { 
+    //    this.zone.runOutsideAngular(() => {
+    //        location.reload();
+    //    });
+    //}
 
 }

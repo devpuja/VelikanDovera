@@ -46,9 +46,12 @@ export class AppComponent implements OnInit, OnDestroy {
         //this.onLogout();
     }
 
-    //@HostListener('window:beforeunload', ['$event'])
-    //beforeUnloadHander(event) {
-    //  return false;
-    //}
+    @HostListener('window:beforeunload', ['$event'])
+    beforeUnloadHander(event) {
+        //return false;
+        this.onLogout();
+        event.preventDefault();
+        //event.stopPropagation();
+    }
 
 }

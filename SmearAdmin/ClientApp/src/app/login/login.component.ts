@@ -61,8 +61,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                                 this.router.navigate(['./employee-dashboard']);
                         }
                     },
-                    //error => this.toastr.error(error));
-                    errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
+                    error => { this.toastr.error(error, "Error"); this.toastr.error("Fail to login, Invalid UserName or Password.", "Error"); });
+            //errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
         }
     }
 
