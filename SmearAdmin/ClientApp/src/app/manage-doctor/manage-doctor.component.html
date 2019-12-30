@@ -69,8 +69,8 @@
       </ng-container>-->
 
           <ng-container matColumnDef="Brand">
-            <th mat-header-cell *matHeaderCellDef> Brand </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef style="width:40%"> Brand </th>
+            <td mat-cell *matCellDef="let element" style="width:40%">
               {{element.BrandName}}<br />
               <small>{{element.Brand}}</small>
             </td>
@@ -105,7 +105,7 @@
               <div *ngIf="element.AuditableEntity.IsActive; then thenBlockDelete; else elseBlockDelete"> </div>
               <ng-template #thenBlockDelete>
                 <i class="fas fa-edit" style="cursor:pointer;" title="Edit" (click)="onEdit(element)"></i>&nbsp;
-                <i class="fas fa-trash" style="cursor:pointer;" title="Delete" (click)="openDialogDelete(element,'delete')"></i>
+                <i class="fas fa-trash" style="cursor:pointer;" title="Delete" (click)="openDialogDelete(element,'delete')" *ngIf="IsAdmin"></i>
               </ng-template>
               <ng-template #elseBlockDelete>
                 <i class="fas fa-undo" style="cursor:pointer;" title="Un Delete" (click)="openDialogDelete(element,'undelete')"></i>

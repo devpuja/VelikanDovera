@@ -34,7 +34,7 @@
         <li *ngIf="userService.isUser">
           <button [routerLink]="['/employee-dashboard']" mat-button><i class="fas fa-tachometer-alt"></i> Dashboard</button>
         </li>
-        <li>
+        <li *ngIf="userService.isAdmin">
           <button mat-button [matMenuTriggerFor]="menu"><i class="fas fa-bars"></i> Masters</button>
           <mat-menu #menu="matMenu">
             <!--<button [routerLink]="['/fetch-data']" mat-menu-item><i class="far fa-plus-square"></i> Fetch</button>-->
