@@ -1,49 +1,56 @@
-<div class="row" style="margin-top:120px;">
-  <div class="col-md-4 col-md-push-4">
-    <h2>Login</h2>
-    <form #f="ngForm" novalidate (ngSubmit)="login(f)">
-    <div class="form-group">
-      <label for="email">User Name</label>
-      <input id="email" type="text" name="email" class="form-control" placeholder="User Name" [ngModel]="credentials.email" #email="ngModel" required tmFocus validateEmail>
-      <!--<small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">Please enter a valid email</small>-->
+<div class="row" style="margin-top:90px;">
+  <div class="col-md-3 col-md-push-4">
+    <div style="text-align:center">
+      <img src="/WebImages/VELIKAN_Logo_NoBg.png" style="height:100px; width:120px;" alt="VELIKAN DOVERA INDIA PVT. LTD" title="VELIKAN DOVERA INDIA PVT. LTD" />
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" required name="password" placeholder="Password" ngModel>
-    </div>
-
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Login</button>
-    </div>
-    <!--<div *ngIf="errors" class="alert alert-danger" role="alert">
-      <strong>Oops!</strong> {{errors}}
-    </div>-->
-  </form>
-
-
-    <!--<h2>Login</h2>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-          <div *ngIf="f.username.errors.required">Username is required</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-          <div *ngIf="f.password.errors.required">Password is required</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">Login</button>
-      </div>
-      <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-    </form>-->
-
   </div>
-</div>
+  </div>
 
-<app-spinner *ngIf="showSpinner"></app-spinner>
+  <div class="row" style="margin-top:30px;">
+    <div class="col-md-3 col-md-push-4">
+      <!--<h2>Login</h2>-->
+      <form #f="ngForm" novalidate (ngSubmit)="login(f)">
+        <div class="form-group">
+          <label for="email">User Name</label>
+          <input id="email" type="text" name="email" class="form-control" placeholder="User Name" [ngModel]="credentials.email" #email="ngModel" required tmFocus validateEmail>
+          <!--<small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">Please enter a valid email</small>-->
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" required name="password" placeholder="Password" ngModel>
+        </div>
+
+        <div class="form-group" style="text-align:center;">
+          <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Login</button>
+        </div>
+        <!--<div *ngIf="errors" class="alert alert-danger" role="alert">
+          <strong>Oops!</strong> {{errors}}
+        </div>-->
+      </form>
+
+      <!--<h2>Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Username is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">Login</button>
+        </div>
+        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+      </form>-->
+
+    </div>
+  </div>
+
+  <app-spinner *ngIf="showSpinner"></app-spinner>

@@ -8,17 +8,17 @@
     </div>
   </div>
 </div>-->
-
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="example-toolbar">
     <button *ngIf="userService.isLoggedIn()" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
 
-    <h1 class="example-app-name">VD</h1>
+    <h1 class="example-app-name"><img src="/WebImages/VELIKAN_Logo.JPG"  style="height:40px; width:40px;" alt="VELIKAN DOVERA INDIA PVT. LTD" title="VELIKAN DOVERA INDIA PVT. LTD"  /></h1>
     <span *ngIf="userService.isLoggedIn()" style="font-size:16px; position:absolute;right:20px;">
       <b style="padding-right:10px;">Welcome, {{userService.getFullName()}}</b>
       <button class="btn btn-danger" (click)="onLogout()"><b><i class="fas fa-sign-out-alt"></i> Logout</b></button>
     </span>
     <button mat-button [routerLink]="['/login']" *ngIf="!userService.isLoggedIn()"> Login</button>
+    <div style="text-align:center; padding-left: 10px;"><h2>VELIKAN DOVERA INDIA PVT. LTD</h2></div>
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container"
