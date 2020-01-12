@@ -116,7 +116,15 @@ namespace SmearAdmin.Repository
             int totalCount = 0, totalPage = 0;
             pageIndex += 1;
 
-            totalCount = _appDbContext.Doctor.Count();
+            //totalCount = _appDbContext.Doctor.Count();
+            totalCount = await (from d in _appDbContext.Doctor
+                                join c in _appDbContext.ContactResourse
+                                on d.Id equals c.RefTableId
+                                join a in _appDbContext.AuditableEntity
+                                on d.Id equals a.RefTableId
+                                where c.RefTableName.Equals(ReferenceTableNames.DOCTOR) && a.CreatedBy.Equals(userName)
+                                select d).CountAsync().ConfigureAwait(false);
+
             totalPage = (totalCount / pageSize) + ((totalCount % pageSize) > 0 ? 1 : 0);
 
             var dataUsers = await (from d in _appDbContext.Doctor
