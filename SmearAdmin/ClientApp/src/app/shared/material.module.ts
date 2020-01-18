@@ -38,6 +38,7 @@ import {
   MatTooltipModule,
   MatTreeModule
 } from '@angular/material';
+//import { FilterSearchComponent } from './resources/filter-search/filter-search.component';
 //import { ContactResourceComponent } from './resources/contact-resource/contact-resource.component';
 //import { ChemistStockistResourceComponent } from './resources/chemist-stockist-resource/chemist-stockist-resource.component';
 
@@ -119,6 +120,6 @@ import {
     MatTooltipModule,
     MatTreeModule
   ],
-  //declarations: [ContactResourceComponent, ChemistStockistResourceComponent]
+  //declarations: [ContactResourceComponent, ChemistStockistResourceComponent, FilterSearchComponent]
 })
 export class MaterialModule { }

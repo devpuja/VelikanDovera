@@ -59,18 +59,18 @@ export class EmployeeExpensesListComponent implements OnInit {
 
   SetUserMonthYear() {
     this.userName = this.userService.getUserName();
-
-    let today = new Date();
+    
     let moyr = "";
-    let month = today.getMonth() + 1;
+    var today = new Date();
 
-    for (var i = 0; i <= 3; i++) {
-      if (i == 0) {
-        moyr = month + "-" + today.getFullYear();
-      } 
-      else
-        moyr = month - i + "-" + today.getFullYear();
+    for (var dt = 0; dt <= 5; dt++) {
+      var makeDate = new Date(today);
 
+      if (dt > 0) {
+        makeDate.setMonth(makeDate.getMonth() - dt);
+      }
+
+      moyr = makeDate.getMonth() + 1 + "-" + makeDate.getFullYear();
       this.monthYearList.push(moyr);
     }
   }

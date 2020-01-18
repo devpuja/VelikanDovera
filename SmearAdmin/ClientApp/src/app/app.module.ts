@@ -46,6 +46,7 @@ import { ChemistStockistResourceComponent } from './shared/resources/chemist-sto
 import { ManageHolidayComponent } from './manage-holiday/manage-holiday.component';
 import { SwapEmployeeComponent } from './swap-employee/swap-employee.component';
 import { SendSmsComponent } from './send-sms/send-sms.component';
+import { FilterSearchComponent } from './shared/resources/filter-search/filter-search.component'
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { SendSmsComponent } from './send-sms/send-sms.component';
     ManagePatientComponent,
     ManageHolidayComponent,
     SwapEmployeeComponent,
-    SendSmsComponent
+    SendSmsComponent,
+    FilterSearchComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

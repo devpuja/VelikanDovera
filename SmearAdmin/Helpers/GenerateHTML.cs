@@ -32,10 +32,9 @@ namespace SmearAdmin.Helpers
             sb.AppendFormat(@"<html>
 <head>
     <meta charset='utf-8' />
-    <title></title>
-    
+    <title></title>    
 </head>
-<body>
+<body style='font-family:Arial; font-size:12px;'>
     <table style='width:100%; margin-top:2px;'>
         <tr>
             <td colspan='3' style='text-align:center;'><h1>VELIKAN DOVERA INDIA PRIVATE LIMITED</h1></td>            
@@ -55,7 +54,7 @@ namespace SmearAdmin.Helpers
         </tr>
     </table>
 
-    <table style='width:100%'>
+    <table style='width:100%;'>
         <tr>
             <td style='width:25px'>#</td>
             <td style='width:100px'>DATE</td>
@@ -72,7 +71,8 @@ namespace SmearAdmin.Helpers
             foreach (var empExp in dataExpenses)
             {
                 DateTime dt = DateTime.Parse(empExp.Date.ToString());
-                var expDt = $"{dt.Day}-{dt.Month}-{dt.Year}";
+                var dayName = dt.ToString("dddd");
+                var expDt = $"{dt.Day}-{dt.Month}-{dt.Year} ({dayName})";
 
                 sb.AppendFormat(@"
                     <tr>
@@ -151,7 +151,7 @@ namespace SmearAdmin.Helpers
                 </table>
             </td>
         </tr>
-    </table>", dataMobile, dataFare, dataStationery, dataCyber, totalB, grandTotal, ApprovedBy);
+    </table>", dataMobile, dataFare, dataStationery, dataCyber, totalB, grandTotal, ApprovedBy.ToUpper());
 
 
             sb.AppendFormat(@"<table style='width:100%'>

@@ -138,22 +138,20 @@ namespace SmearAdmin.Controllers
         [Route("[action]")]
         public async Task<IActionResult> GeneratePdfEmployeeExpense(string UserName, string MonthYear)
         {
-            byte[] file = null;
-            string fileName = "", fullfilePath = "";
-            PDFViewModel pdfVM = null;
+            PDFViewModel pdfVM;
             try
             {
                 //Get PDF HTML
                 var getPdfHtml = await _unitOfWork.AdminDashboard.GetEmployeeExpenseForPDF(UserName, MonthYear);
 
                 //Set FileName
-                fileName = $"{UserName}_{ MonthYear}_{DateTime.Now.ToString("ddmmyyyy")}{DateTime.Now.Millisecond}.pdf";
+                string fileName = $"{UserName}_{ MonthYear}_{DateTime.Now.ToString("ddmmyyyy")}{DateTime.Now.Millisecond}.pdf";
 
                 //Generate PDF
                 GeneratePDF generatePDF = new GeneratePDF(_converter, _host);
-                file = generatePDF.GetPdfFile(fileName, getPdfHtml, "PDF Report", "For PSR", "Signature of PSR");
+                byte[] file = generatePDF.GetPdfFile(fileName, getPdfHtml, "PDF Report", "For PSR", "Signature of PSR");
 
-                fullfilePath = Path.Combine(_host.WebRootPath, "Downloads", fileName);
+                string fullfilePath = Path.Combine(_host.WebRootPath, "Downloads", fileName);
 
                 pdfVM = new PDFViewModel()
                 {

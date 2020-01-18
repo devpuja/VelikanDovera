@@ -111,10 +111,9 @@ namespace SmearAdmin.Repository
                                           ApprovedBy = e.ApprovedBy,
                                           ApproverRemark = e.ApproverRemark,
                                           Status = es.Status
-                                      })
-                             .ToListAsync().ConfigureAwait(false);
+                                      }).OrderBy(x => x.Date).ToListAsync().ConfigureAwait(false);
 
-            dataExpenses.OrderBy(f => f.Date);
+            //dataExpenses.OrderBy(f => f.Date);
 
             var dataUsers = await (from u in _appDbContext.Users
                              where u.UserName.Equals(UserName)
@@ -154,10 +153,10 @@ namespace SmearAdmin.Repository
 
             if (dataExpCount < 15)
             {
-                dataMobile = dataMobile / 2;
-                dataFare = dataFare / 2;
-                dataStationery = dataStationery / 2;
-                dataCyber = dataCyber / 2;
+                dataMobile /= 2;
+                dataFare /= 2;
+                dataStationery /= 2;
+                dataCyber /= 2;
             }
 
             return GenerateHTML.GetHTMLEmployeeExpense(dataUsers.ToList()[0], dataExpenses.ToList(), dataMobile, dataFare, dataStationery, dataCyber);

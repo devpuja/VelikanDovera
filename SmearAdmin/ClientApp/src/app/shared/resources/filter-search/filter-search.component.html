@@ -1,0 +1,37 @@
+<div [formGroup]="searchForm">
+  <div class="row">
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-select formControlName="UserNameCtrl" placeholder="Choose User" required>
+          <mat-option [value]="">--User Name--</mat-option>
+          <mat-option *ngFor="let unfrm of EmployeeList" [value]="unfrm.UserName">
+            {{ unfrm.FullName }}
+          </mat-option>
+        </mat-select>
+        <!--<mat-error *ngIf="searchForm.controls.UserNameCtrl.hasError('required')">User From Required</mat-error>-->
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-1">
+      <button mat-raised-button color="primary" type="button" title="Search by username" (click)="filterByEmployee()"><i class="fa fa-search" aria-hidden="true"></i></button>
+    </div>
+
+    <div class="col-md-3">
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="DocChemStoCtrl" required maxlength="30" minlength="3">
+        <!--<mat-error *ngIf="searchForm.controls.DocChemStoCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <mat-error *ngIf="searchForm.controls.DocChemStoCtrl.hasError('minlength')">Min 3 chars</mat-error>
+        <mat-error *ngIf="searchForm.controls.DocChemStoCtrl.hasError('required')">Food License Number Required</mat-error>
+        <mat-hint align="end">{{searchForm.controls.DocChemStoCtrl.value?.length || 0}} / 30</mat-hint>-->
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-1">
+      <button mat-raised-button color="primary" type="button" title="Search by doctor/chemist/stockist" (click)="filterByNames()"><i class="fa fa-search-plus" aria-hidden="true"></i><!--<i class="fas fa-arrow-left"></i>--></button>
+    </div>
+
+  </div>
+  <!--{{searchForm.value | json}}-->
+</div>
+
+<app-spinner *ngIf="showSpinner"></app-spinner>
