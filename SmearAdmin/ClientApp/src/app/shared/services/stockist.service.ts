@@ -62,6 +62,29 @@ export class StockistService {
     return this.getList;
   }
 
+  getAllStockistsByUserName(pageIndex: number, pageSize: number, userName: string): Observable<any> {
+
+    const params = new HttpParams()
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString())
+      .set("userName", userName.toString());
+
+    this.getList = this.httpClient.get<Stockist[]>(this.baseUrl + "api/Stockist/GetAllStockistsByUser", { params });
+
+    return this.getList;
+  }
+
+  getAllStockistsBySearch(pageIndex: number, pageSize: number, searchValue: string): Observable<any> {
+    const params = new HttpParams()
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString())
+      .set("searchValue", searchValue.toString());
+
+    this.getList = this.httpClient.get<Stockist[]>(this.baseUrl + "api/Stockist/GetAllStockistsBySearch", { params });
+
+    return this.getList;
+  }
+
   deleteStockist(stock: Stockist, action: string): Observable<Stockist> {
     const params = new HttpParams().set("action", action.toString());
     return this.httpClient.put<Stockist>(this.baseUrl + "api/Stockist/DeleteStockist", stock, { params });

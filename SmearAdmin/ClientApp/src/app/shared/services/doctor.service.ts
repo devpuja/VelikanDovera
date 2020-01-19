@@ -58,6 +58,29 @@ export class DoctorService {
     return this.getList;
   }
 
+  getAllDoctorsByUserName(pageIndex: number, pageSize: number, userName: string): Observable<any> {
+    const params = new HttpParams()
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString())
+      .set("userName", userName.toString());
+
+    this.getList = this.httpClient.get<Doctor[]>(this.baseUrl + "api/Doctor/GetAllDoctorsByUser", { params });
+
+    return this.getList;
+  }
+
+  getAllDoctorsBySearch(pageIndex: number, pageSize: number, searchValue: string): Observable<any> {
+    const params = new HttpParams()
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString())
+      .set("searchValue", searchValue.toString());
+
+    this.getList = this.httpClient.get<Doctor[]>(this.baseUrl + "api/Doctor/GetAllDoctorsBySearch", { params });
+
+    return this.getList;
+  }
+  
+
   deleteDoctor(userReg: Doctor, action: string): Observable<Doctor> {
     const params = new HttpParams().set("action", action.toString());
     return this.httpClient.put<Doctor>(this.baseUrl + "api/Doctor/DeleteDoctor", userReg, { params });

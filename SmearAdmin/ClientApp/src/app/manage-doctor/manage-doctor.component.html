@@ -23,8 +23,8 @@
   <div class="clearfix"></div>
   <br />-->
       <!--https://parthamajumdar.org/2018/10/16/expandable-rows-in-mat-table-programmed-with-angular/-->
-      <!--<app-filter-search [parentForm]="docFormGroup.get('search')"></app-filter-search>-->
-      <!--<app-filter-search [function]="getValues"></app-filter-search>-->
+
+      <app-filter-search *ngIf="IsAdmin" (parentFun)="getValuesByUserName($event)" (parentFun2)="getValuesBySearch($event)" (parentFun3)="resetFilter()"></app-filter-search>
 
       <div id="table">
         <table mat-table multiTemplateDataRows [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%;">

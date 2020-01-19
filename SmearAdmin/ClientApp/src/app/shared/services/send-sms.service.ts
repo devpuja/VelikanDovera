@@ -22,6 +22,24 @@ export class SendSmsService {
         return this.httpClient.get<any>(`${this.baseUrl}api/SendSMS/GetAllDoctorSendSMS`, { params });
     }
 
+  getAllDoctorSendSMSByUserName(pageIndex: number, pageSize: number, userName: string): Observable<any> {
+    const params = new HttpParams()
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString())
+      .set("userName", userName.toString());
+
+    return this.httpClient.get<any>(`${this.baseUrl}api/SendSMS/GetAllDoctorSendSMSByUser`, { params });
+  }
+
+  getAllDoctorSendSMSBySearch(pageIndex: number, pageSize: number, searchValue: string): Observable<any> {
+    const params = new HttpParams()
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString())
+      .set("searchValue", searchValue.toString());
+
+    return this.httpClient.get<any>(`${this.baseUrl}api/SendSMS/GetAllDoctorSendSMSBySearch`, { params });
+  }
+
     //Send SMS
     sendSMSToDoctor(sendSMSLst: SendSMSList[]): Observable<any> {
         let httpHeaders = new HttpHeaders({

@@ -100,6 +100,14 @@ namespace SmearAdmin.Controllers
             return Ok(results);
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> GetAllStockistsBySearch(int pageIndex, int pageSize, string searchValue)
+        {
+            var results = await _unitOfWork.Stockist.GetAllStockistBySearchAsync(pageIndex, pageSize, searchValue);
+            return Ok(results);
+        }
+
         [HttpPut]
         [Route("[action]")]
         public async Task<IActionResult> DeleteStockist(StockistViewModel stockistVM, string action)

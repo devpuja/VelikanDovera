@@ -12,6 +12,7 @@ namespace SmearAdmin.Interface
     {
         Task<PagingResult<DoctorViewModel>> GetAllDoctorAsync(int pageIndex, int pageSize);
         Task<PagingResult<DoctorViewModel>> GetAllDoctorsByUserAsync(int pageIndex, int pageSize, string userName);
+        Task<PagingResult<DoctorViewModel>> GetAllDoctorsBySearchAsync(int pageIndex, int pageSize, string searchValue);        
         Task<DoctorViewModel> GetDoctorByIDAsync(string ID);
         Task<ExportExcel> ExportDoctorsDataAsync(IHostingEnvironment _host);
         Task<ExportExcel> ExportDoctorsDataByUserAsync(IHostingEnvironment _host, string userName);

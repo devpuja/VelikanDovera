@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -14,15 +14,17 @@ export class FilterSearchComponent implements OnInit {
   isLinear = false;
 
   @Input('parentForm')
-  @Input() function: any;
-
- 
+  @Output("parentFun") parentFun: EventEmitter<any> = new EventEmitter();
+  @Output("parentFun2") parentFun2: EventEmitter<any> = new EventEmitter();
+  @Output("parentFun3") parentFun3: EventEmitter<any> = new EventEmitter();
+   
   public searchForm: FormGroup;
   EmployeeList: any;
 
   //Model For Forms
   userNameData: any = {
-    UserName: ''
+    UserName: '',
+    DocChemSto:''
   };
 
   constructor(private _formBuilder: FormBuilder, private swapService: SwapEmployeeService, private toastr: ToastrService, private router: Router, private route: ActivatedRoute) { }
@@ -37,6 +39,7 @@ export class FilterSearchComponent implements OnInit {
   }
 
   get UserNameCtrl() { return this.searchForm.get('UserNameCtrl'); }
+  get DocChemStoCtrl() { return this.searchForm.get('DocChemStoCtrl'); }
 
   loadEmployeeUserNames() {
     this.showSpinner = true;
@@ -52,11 +55,23 @@ export class FilterSearchComponent implements OnInit {
   }
 
   filterByEmployee() {
-    alert('filterByEmployee');
-    this.function();
+    this.userNameData.UserName = this.UserNameCtrl.value;    
+    if (this.userNameData.UserName == undefined)
+      this.userNameData.UserName = "";
+
+    this.parentFun.emit(this.userNameData.UserName);
   }
 
   filterByNames() {
-    alert('filterByNames');
+    this.userNameData.DocChemSto = this.DocChemStoCtrl.value;
+    if (this.userNameData.DocChemSto == undefined)
+      this.userNameData.DocChemSto = "";
+
+    this.parentFun2.emit(this.userNameData.DocChemSto);
+  }
+
+  filterReset() {
+    this.searchForm.reset();
+    this.parentFun3.emit();
   }
 }

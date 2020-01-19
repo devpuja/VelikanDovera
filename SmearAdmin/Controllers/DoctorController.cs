@@ -98,6 +98,14 @@ namespace SmearAdmin.Controllers
             return Ok(results);
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> GetAllDoctorsBySearch(int pageIndex, int pageSize, string searchValue)
+        {
+            var results = await _unitOfWork.Doctors.GetAllDoctorsBySearchAsync(pageIndex, pageSize, searchValue);
+            return Ok(results);
+        }
+
         [HttpPut]
         [Route("[action]")]
         public async Task<IActionResult> DeleteDoctor(DoctorViewModel docVM, string action)

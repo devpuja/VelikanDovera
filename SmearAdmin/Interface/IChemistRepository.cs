@@ -11,6 +11,7 @@ namespace SmearAdmin.Interface
     {
         Task<PagingResult<ChemistViewModel>> GetAllChemistAsync(int pageIndex, int pageSize);
         Task<PagingResult<ChemistViewModel>> GetAllChemistByUserAsync(int pageIndex, int pageSize, string userName);
+        Task<PagingResult<ChemistViewModel>> GetAllChemistBySearchAsync(int pageIndex, int pageSize, string searchValue);        
         Task<ChemistViewModel> GetChemistByIDAsync(string ID);
         Task<ExportExcel> ExportChemistsDataAsync(IHostingEnvironment _host);
         Task<ExportExcel> ExportChemistsDataByUserAsync(IHostingEnvironment _host, string userName);

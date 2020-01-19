@@ -184,6 +184,92 @@ namespace SmearAdmin.Repository
             return await Task.FromResult(pagingData);
         }
 
+
+        public async Task<PagingResult<StockistViewModel>> GetAllStockistBySearchAsync(int pageIndex, int pageSize, string searchValue)
+        {
+            int totalCount = 0, totalPage = 0;
+            pageIndex += 1;
+
+            //totalCount = _appDbContext.Stockist.Count();
+            totalCount = await (from d in _appDbContext.Stockist
+                                join c in _appDbContext.ContactResourse
+                                on d.Id equals c.RefTableId
+                                join a in _appDbContext.AuditableEntity
+                                on d.Id equals a.RefTableId
+                                where c.RefTableName.Equals(ReferenceTableNames.STOCKIST) && d.StockistName.Contains(searchValue)
+                                select d).CountAsync().ConfigureAwait(false);
+
+            totalPage = (totalCount / pageSize) + ((totalCount % pageSize) > 0 ? 1 : 0);
+
+            var dataUsers = await (from d in _appDbContext.Stockist
+                                   join c in _appDbContext.ContactResourse
+                                   on d.Id equals c.RefTableId
+                                   join cs in _appDbContext.ChemistStockistResourse
+                                   on d.Id equals cs.RefTableId
+                                   join a in _appDbContext.AuditableEntity
+                                   on d.Id equals a.RefTableId
+                                   where c.RefTableName.Equals(ReferenceTableNames.STOCKIST) && d.StockistName.Contains(searchValue)
+                                   select new StockistViewModel
+                                   {
+                                       ID = d.Id,
+                                       StockistName = d.StockistName,
+                                       Contact = new ContactResourseViewModel
+                                       {
+                                           ID = c.Id,
+                                           RefTableId = c.RefTableId,
+                                           RefTableName = c.RefTableName,
+                                           Address = c.Address,
+                                           State = c.State,
+                                           City = c.City,
+                                           PinCode = c.PinCode,
+                                           Area = c.Area,
+                                           EmailId = c.EmailId,
+                                           MobileNumber = c.MobileNumber,
+                                           ResidenceNumber = c.ResidenceNumber
+                                       },
+                                       Common = new CommonResourceViewModel
+                                       {
+                                           ID = cs.Id,
+                                           DrugLicenseNo = cs.DrugLicenseNo,
+                                           FoodLicenseNo = cs.FoodLicenseNo,
+                                           GSTNo = cs.Gstno,
+                                           BestTimeToMeet = cs.BestTimeToMeet,
+                                           ContactPersonName = cs.ContactPersonName,
+                                           ContactPersonMobileNumber = cs.ContactPersonMobileNumber,
+                                           ContactPersonDateOfBirth = cs.ContactPersonDateOfBirth,
+                                           ContactPersonDateOfAnniversary = cs.ContactPersonDateOfAnniversary,
+                                           RefTableId = cs.RefTableId,
+                                           RefTableName = cs.RefTableName
+                                       },
+                                       AuditableEntity = new AuditableEntityViewModel
+                                       {
+                                           ID = a.Id,
+                                           RefTableId = a.RefTableId,
+                                           RefTableName = a.RefTableName,
+                                           FoundationDay = a.FoundationDay,
+                                           CommunityID = (int)a.CommunityId,
+                                           CommunityName = (from c in _appDbContext.MasterKeyValue
+                                                            where c.Id == a.CommunityId && c.Type.Equals(EmployeeConstant.Community)
+                                                            select c.Value).FirstOrDefault(),
+                                           IsActive = Convert.ToBoolean(a.IsActive),
+                                           CreateDate = a.CreateDate,
+                                           CreatedBy = a.CreatedBy
+                                       }
+                                   })
+                             .Skip((pageIndex - 1) * pageSize)
+                             .Take(pageSize)
+                             .ToListAsync().ConfigureAwait(false);
+
+            var pagingData = new PagingResult<StockistViewModel>
+            {
+                Items = dataUsers.AsEnumerable().OrderBy(f => f.StockistName),
+                TotalCount = totalCount,
+                TotalPage = totalPage
+            };
+
+            return await Task.FromResult(pagingData);
+        }
+
         public async Task<StockistViewModel> GetStockistByIDAsync(string ID)
         {
             var dataStockist = await (from d in _appDbContext.Stockist

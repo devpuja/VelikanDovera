@@ -100,6 +100,14 @@ namespace SmearAdmin.Controllers
             return Ok(results);
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> GetAllChemistsBySearch(int pageIndex, int pageSize, string searchValue)
+        {
+            var results = await _unitOfWork.Chemist.GetAllChemistBySearchAsync(pageIndex, pageSize, searchValue);
+            return Ok(results);
+        }
+
         [HttpPut]
         [Route("[action]")]
         public async Task<IActionResult> DeleteChemist(ChemistViewModel chemistVM, string action)

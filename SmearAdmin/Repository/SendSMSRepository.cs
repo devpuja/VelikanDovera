@@ -62,6 +62,111 @@ namespace SmearAdmin.Repository
             return await Task.FromResult(pagingData);
         }
 
+
+        public async Task<PagingResult<DoctorViewModel>> GetAllDoctorSendSMSByUserAsync(int pageIndex, int pageSize, string userName)
+        {
+            int totalCount = 0, totalPage = 0;
+            pageIndex += 1;
+
+            //totalCount = _appDbContext.Doctor.Count();
+            totalCount = await (from d in _appDbContext.Doctor
+                                join c in _appDbContext.ContactResourse
+                                on d.Id equals c.RefTableId
+                                join a in _appDbContext.AuditableEntity
+                                on d.Id equals a.RefTableId
+                                where c.RefTableName.Equals(ReferenceTableNames.DOCTOR) && a.CreatedBy.Equals(userName)
+                                select d).CountAsync().ConfigureAwait(false);
+
+            totalPage = (totalCount / pageSize) + ((totalCount % pageSize) > 0 ? 1 : 0);
+
+            var dataUsers = await (from d in _appDbContext.Doctor
+                                   join c in _appDbContext.ContactResourse
+                                   on d.Id equals c.RefTableId
+                                   join a in _appDbContext.AuditableEntity
+                                   on d.Id equals a.RefTableId
+                                   where c.RefTableName.Equals(ReferenceTableNames.DOCTOR) && a.CreatedBy.Equals(userName)
+                                   select new DoctorViewModel
+                                   {
+                                       ID = Convert.ToString(d.Id),
+                                       Name = d.Name,
+                                       Speciality = d.Speciality,
+                                       Class = d.Class,
+                                       Brand = d.Brand,
+                                       BrandName = (from b in _appDbContext.MasterKeyValue
+                                                    where d.Brand.ToString().Contains(b.Id.ToString()) && b.Type.Equals(DoctorConstant.Brand)
+                                                    select b.Value).ToList(),
+                                       //BrandName = _appDbContext.MasterKeyValue.Where(c => d.Brand.ToString().Contains(c.Id.ToString()) && c.Type.Equals(DoctorConstant.Brand)).Select(v => v.Value).ToList(),
+                                       Contact = new ContactResourseViewModel
+                                       {
+                                           MobileNumber = c.MobileNumber
+                                       }
+                                   })
+                             .Skip((pageIndex - 1) * pageSize)
+                             .Take(pageSize)
+                             .ToListAsync().ConfigureAwait(false);
+
+            var pagingData = new PagingResult<DoctorViewModel>
+            {
+                Items = dataUsers.AsEnumerable().OrderBy(f => f.Name),
+                TotalCount = totalCount,
+                TotalPage = totalPage
+            };
+
+            return await Task.FromResult(pagingData);
+        }
+
+        public async Task<PagingResult<DoctorViewModel>> GetAllDoctorSendSMSBySearchAsync(int pageIndex, int pageSize, string searchValue)
+        {
+            int totalCount = 0, totalPage = 0;
+            pageIndex += 1;
+
+            //totalCount = _appDbContext.Doctor.Count();
+            totalCount = await (from d in _appDbContext.Doctor
+                                join c in _appDbContext.ContactResourse
+                                on d.Id equals c.RefTableId
+                                join a in _appDbContext.AuditableEntity
+                                on d.Id equals a.RefTableId
+                                where c.RefTableName.Equals(ReferenceTableNames.DOCTOR) && d.Name.Contains(searchValue)
+                                select d).CountAsync().ConfigureAwait(false);
+
+            totalPage = (totalCount / pageSize) + ((totalCount % pageSize) > 0 ? 1 : 0);
+
+            var dataUsers = await (from d in _appDbContext.Doctor
+                                   join c in _appDbContext.ContactResourse
+                                   on d.Id equals c.RefTableId
+                                   join a in _appDbContext.AuditableEntity
+                                   on d.Id equals a.RefTableId
+                                   where c.RefTableName.Equals(ReferenceTableNames.DOCTOR) && d.Name.Contains(searchValue)
+                                   select new DoctorViewModel
+                                   {
+                                       ID = Convert.ToString(d.Id),
+                                       Name = d.Name,
+                                       Speciality = d.Speciality,
+                                       Class = d.Class,
+                                       Brand = d.Brand,
+                                       BrandName = (from b in _appDbContext.MasterKeyValue
+                                                    where d.Brand.ToString().Contains(b.Id.ToString()) && b.Type.Equals(DoctorConstant.Brand)
+                                                    select b.Value).ToList(),
+                                       //BrandName = _appDbContext.MasterKeyValue.Where(c => d.Brand.ToString().Contains(c.Id.ToString()) && c.Type.Equals(DoctorConstant.Brand)).Select(v => v.Value).ToList(),
+                                       Contact = new ContactResourseViewModel
+                                       {
+                                           MobileNumber = c.MobileNumber
+                                       }
+                                   })
+                             .Skip((pageIndex - 1) * pageSize)
+                             .Take(pageSize)
+                             .ToListAsync().ConfigureAwait(false);
+
+            var pagingData = new PagingResult<DoctorViewModel>
+            {
+                Items = dataUsers.AsEnumerable().OrderBy(f => f.Name),
+                TotalCount = totalCount,
+                TotalPage = totalPage
+            };
+
+            return await Task.FromResult(pagingData);
+        }
+
         public async Task<AdminDashboardViewModelDTO> GetSendSMSCountAsync()
         {
             //Get Count

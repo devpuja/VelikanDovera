@@ -203,6 +203,99 @@ namespace SmearAdmin.Repository
             return await Task.FromResult(pagingData);
         }
 
+
+        public async Task<PagingResult<DoctorViewModel>> GetAllDoctorsBySearchAsync(int pageIndex, int pageSize, string searchValue)
+        {
+            int totalCount = 0, totalPage = 0;
+            pageIndex += 1;
+
+            //totalCount = _appDbContext.Doctor.Count();
+            totalCount = await (from d in _appDbContext.Doctor
+                                join c in _appDbContext.ContactResourse
+                                on d.Id equals c.RefTableId
+                                join a in _appDbContext.AuditableEntity
+                                on d.Id equals a.RefTableId
+                                where c.RefTableName.Equals(ReferenceTableNames.DOCTOR) && d.Name.Contains(searchValue)
+                                select d).CountAsync().ConfigureAwait(false);
+
+            totalPage = (totalCount / pageSize) + ((totalCount % pageSize) > 0 ? 1 : 0);
+
+            var dataUsers = await (from d in _appDbContext.Doctor
+                                   join c in _appDbContext.ContactResourse
+                                   on d.Id equals c.RefTableId
+                                   join cs in _appDbContext.ChemistStockistResourse
+                                   on d.Id equals cs.RefTableId
+                                   join a in _appDbContext.AuditableEntity
+                                   on d.Id equals a.RefTableId
+                                   where c.RefTableName.Equals(ReferenceTableNames.DOCTOR) && d.Name.Contains(searchValue)
+                                   select new DoctorViewModel
+                                   {
+                                       ID = Convert.ToString(d.Id),
+                                       Name = d.Name,
+                                       Qualification = d.Qualification,
+                                       RegistrationNo = d.RegistrationNo,
+                                       Speciality = d.Speciality,
+                                       Gender = d.Gender,
+                                       VisitFrequency = d.VisitFrequency,
+                                       VisitPlan = d.VisitPlan,
+                                       BestDayToMeet = d.BestDayToMeet,
+                                       BestTimeToMeet = d.BestTimeToMeet,
+                                       Class = d.Class,
+                                       Brand = d.Brand,
+                                       BrandName = (from b in _appDbContext.MasterKeyValue
+                                                    where d.Brand.ToString().Contains(b.Id.ToString()) && b.Type.Equals(DoctorConstant.Brand)
+                                                    select b.Value).ToList(),
+                                       //BrandName = _appDbContext.MasterKeyValue.Where(c => d.Brand.ToString().Contains(c.Id.ToString()) && c.Type.Equals(DoctorConstant.Brand)).Select(v => v.Value).ToList(),
+                                       Contact = new ContactResourseViewModel
+                                       {
+                                           ID = c.Id,
+                                           RefTableId = c.RefTableId,
+                                           RefTableName = c.RefTableName,
+                                           Address = c.Address,
+                                           State = c.State,
+                                           City = c.City,
+                                           PinCode = c.PinCode,
+                                           MobileNumber = c.MobileNumber,
+                                           ResidenceNumber = c.ResidenceNumber
+                                       },
+                                       Common = new CommonResourceViewModel
+                                       {
+                                           ID = cs.Id,
+                                           ContactPersonMobileNumber = cs.ContactPersonMobileNumber,
+                                           ContactPersonDateOfBirth = cs.ContactPersonDateOfBirth,
+                                           ContactPersonDateOfAnniversary = cs.ContactPersonDateOfAnniversary,
+                                           RefTableId = Convert.ToString(cs.RefTableId),
+                                           RefTableName = cs.RefTableName
+                                       },
+                                       AuditableEntity = new AuditableEntityViewModel
+                                       {
+                                           ID = a.Id,
+                                           RefTableId = a.RefTableId,
+                                           RefTableName = a.RefTableName,
+                                           FoundationDay = a.FoundationDay,
+                                           CommunityID = (int)a.CommunityId,
+                                           CommunityName = (from c in _appDbContext.MasterKeyValue
+                                                            where c.Id == a.CommunityId && c.Type.Equals(EmployeeConstant.Community)
+                                                            select c.Value).FirstOrDefault(),
+                                           IsActive = Convert.ToBoolean(a.IsActive),
+                                           CreateDate = a.CreateDate,
+                                           CreatedBy = a.CreatedBy
+                                       }
+                                   })
+                             .Skip((pageIndex - 1) * pageSize)
+                             .Take(pageSize)
+                             .ToListAsync().ConfigureAwait(false);
+
+            var pagingData = new PagingResult<DoctorViewModel>
+            {
+                Items = dataUsers.AsEnumerable().OrderBy(f => f.Name),
+                TotalCount = totalCount,
+                TotalPage = totalPage
+            };
+
+            return await Task.FromResult(pagingData);
+        }
+
         public async Task<DoctorViewModel> GetDoctorByIDAsync(string ID)
         {
             var dataDoctor = await (from d in _appDbContext.Doctor

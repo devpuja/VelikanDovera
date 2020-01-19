@@ -33,6 +33,23 @@ namespace SmearAdmin.Controllers
             return Ok(results);
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> GetAllDoctorSendSMSByUser(int pageIndex, int pageSize, string userName)
+        {
+            var results = await _unitOfWork.SendSMS.GetAllDoctorSendSMSByUserAsync(pageIndex, pageSize, userName);
+            return Ok(results);
+        }
+
+
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> GetAllDoctorSendSMSBySearch(int pageIndex, int pageSize, string searchValue)
+        {
+            var results = await _unitOfWork.SendSMS.GetAllDoctorSendSMSBySearchAsync(pageIndex, pageSize, searchValue);
+            return Ok(results);
+        }
+
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> SendSMSData([FromBody] List<SMSMessageMobileViewModel> objSMSMessageMobile)

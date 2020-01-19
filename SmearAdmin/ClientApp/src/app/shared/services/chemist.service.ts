@@ -61,6 +61,26 @@ export class ChemistService {
     return this.getList;
   }
 
+  getAllChemistsByUserName(pageIndex: number, pageSize: number, userName: string): Observable<any> {
+    const params = new HttpParams()
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString())
+      .set("userName", userName.toString());
+
+    this.getList = this.httpClient.get<Chemist[]>(this.baseUrl + "api/Chemist/GetAllChemistsByUser", { params });
+    return this.getList;
+  }
+
+  getAllChemistsBySearch(pageIndex: number, pageSize: number, searchValue: string): Observable<any> {
+    const params = new HttpParams()
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString())
+      .set("searchValue", searchValue.toString());
+
+    this.getList = this.httpClient.get<Chemist[]>(this.baseUrl + "api/Chemist/GetAllChemistsBySearch", { params });
+    return this.getList;
+  }
+
   deleteChemist(chem: Chemist, action: string): Observable<Chemist> {
     const params = new HttpParams().set("action", action.toString());
     return this.httpClient.put<Chemist>(this.baseUrl + "api/Chemist/DeleteChemist", chem, { params });

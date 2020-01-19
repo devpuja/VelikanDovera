@@ -11,6 +11,7 @@ namespace SmearAdmin.Interface
     {
         Task<PagingResult<StockistViewModel>> GetAllStockistAsync(int pageIndex, int pageSize);
         Task<PagingResult<StockistViewModel>> GetAllStockistByUserAsync(int pageIndex, int pageSize, string userName);
+        Task<PagingResult<StockistViewModel>> GetAllStockistBySearchAsync(int pageIndex, int pageSize, string searchValue);        
         Task<StockistViewModel> GetStockistByIDAsync(string ID);
         Task<ExportExcel> ExportStockistsDataAsync(IHostingEnvironment _host);
         Task<ExportExcel> ExportStockistsDataByUserAsync(IHostingEnvironment _host, string userName);

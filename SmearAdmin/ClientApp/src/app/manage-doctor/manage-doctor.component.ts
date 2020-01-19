@@ -28,6 +28,8 @@ export class ManageDoctorComponent implements OnInit {
   showSpinner: boolean = false;
   baseUrl: string = '';
   IsAdmin: boolean = true;
+  IsFilterValue: string = "";
+  IsSearchValue: string = "";
 
   // Pagination
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -42,7 +44,14 @@ export class ManageDoctorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getValues();
+    if (this.IsFilterValue != "") {
+      this.getValuesByUserName(this.IsFilterValue);
+    } else if (this.IsSearchValue != "") {
+      this.getValuesBySearch(this.IsSearchValue);
+    }
+    else {
+      this.getValues();
+    }
   }
 
   ngAfterViewInit() {
@@ -50,7 +59,13 @@ export class ManageDoctorComponent implements OnInit {
   }
 
   loadPages() {
-    this.loadData(this.paginator.pageIndex, this.paginator.pageSize);
+    if (this.IsFilterValue != "") {
+      this.loadDataByUserName(this.paginator.pageIndex, this.paginator.pageSize, this.IsFilterValue);
+    } else if (this.IsSearchValue != "") {
+      this.loadDataBySearch(this.paginator.pageIndex, this.paginator.pageSize, this.IsSearchValue);
+    } else {
+      this.loadData(this.paginator.pageIndex, this.paginator.pageSize);
+    }
   }
 
   getValues() {
@@ -72,6 +87,69 @@ export class ManageDoctorComponent implements OnInit {
         },
         errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
   }
+
+  //Filter by User
+  getValuesByUserName($event: string) {
+    this.IsFilterValue = $event;
+    if (this.IsFilterValue != "") {
+      this.loadDataByUserName(0, 5, this.IsFilterValue);
+    }
+    else {
+      this.loadData(0, 5);
+    }
+  }
+
+  loadDataByUserName(pgIndex: number, pgSize: number, userName: string) {
+    this.showSpinner = true;
+    this.docService.getAllDoctorsByUserName(pgIndex, pgSize, userName)
+      .finally(() => this.showSpinner = false)
+      .subscribe(
+        result => {
+          if (result) {
+            this.dataSource = new DoctorDataSource(result.Items);
+            this.totalItemsCount = result.TotalCount;
+            this.toastr.success("Records Loaded", "Success");
+          }
+        },
+        errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
+  }
+  //Filter by User
+  
+  //Search by User
+  getValuesBySearch($event: string) {
+    this.IsSearchValue = $event;
+    if (this.IsSearchValue != "") {
+      this.loadDataBySearch(0, 5, this.IsSearchValue);
+    }
+    else {
+      this.loadData(0, 5);
+    }
+  }
+
+  loadDataBySearch(pgIndex: number, pgSize: number, searchValue: string) {
+    this.showSpinner = true;
+    this.docService.getAllDoctorsBySearch(pgIndex, pgSize, searchValue)
+      .finally(() => this.showSpinner = false)
+      .subscribe(
+        result => {
+          if (result) {
+            //console.log(result.Items);
+            this.dataSource = new DoctorDataSource(result.Items);
+            this.totalItemsCount = result.TotalCount;
+            this.toastr.success("Records Loaded", "Success");
+          }
+        },
+        errors => { this.toastr.error(errors.message, "Error"); this.toastr.error(errors.error.message, "Error"); });
+  }
+  //Search by User
+
+  //reset Filter
+  resetFilter() {
+    this.IsFilterValue = "";
+    this.IsSearchValue = "";
+    this.getValues();
+  }
+  //reset Filter
 
   onEdit(doc: Doctor): void {
     //https://github.com/angular/angular/issues/11379

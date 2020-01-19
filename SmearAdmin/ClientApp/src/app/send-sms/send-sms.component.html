@@ -1,12 +1,14 @@
 <div style="top:10px;">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
       <div class="panel panel-default">
         <div class="panel-heading">
           <b>Doctor List</b>
           <div class="clearfix"></div>
         </div>
         <div class="panel-body">
+          <app-filter-search (parentFun)="getValuesByUserName($event)" (parentFun2)="getValuesBySearch($event)" (parentFun3)="resetFilter()"></app-filter-search>
+
           <div id="table">
             <table mat-table multiTemplateDataRows [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%">
               <ng-container matColumnDef="Name">
@@ -42,7 +44,7 @@
                 <td mat-cell *matCellDef="let element">
                   <i class="fas fa-plus-square" style="cursor:pointer;" title="Add Mobile Number" (click)="onAddMobileNumber(element)"></i>
                   <!--<input id='chkID_' {{element.ID}} type="checkbox" ng-init='checkStatus=false' ng-model='checkStatus'
-                         (click)="onAddMobileNumber(checkStatus,'chkID_'+doc.ID, doc.MobileNumber,doc.Name,$index)" />-->
+                 (click)="onAddMobileNumber(checkStatus,'chkID_'+doc.ID, doc.MobileNumber,doc.Name,$index)" />-->
                 </td>
               </ng-container>
 
@@ -60,7 +62,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="panel panel-default">
         <div class="panel-heading">
           <b>Sent SMS</b>
@@ -79,6 +81,8 @@
                 </div>
                 <div class="col-md-2">
                   <button mat-raised-button color="primary" type="submit" [disabled]="!SMSFormGroup.valid">Send SMS</button>
+                  <br /><br />
+                  <button mat-raised-button color="accent" type="button" (click)="resetSMSList()">Reset</button>
                 </div>
               </div>
 
