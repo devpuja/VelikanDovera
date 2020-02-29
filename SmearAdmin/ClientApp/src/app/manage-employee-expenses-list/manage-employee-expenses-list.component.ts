@@ -66,7 +66,7 @@ export class ManageEmployeeExpensesListComponent implements OnInit {
         }
     }
 
-    SetUserMonthYear() {
+    /*SetUserMonthYear() {
         this.userName = this.userService.getUserName();
 
         let today = new Date();
@@ -82,6 +82,24 @@ export class ManageEmployeeExpensesListComponent implements OnInit {
 
             this.monthYearList.push(moyr);
         }
+    }*/
+
+    SetUserMonthYear() {
+    this.userName = this.userService.getUserName();
+    
+    let moyr = "";
+    var today = new Date();
+
+    for (var dt = 0; dt <= 5; dt++) {
+      var makeDate = new Date(today);
+
+      if (dt > 0) {
+        makeDate.setMonth(makeDate.getMonth() - dt);
+      }
+
+      moyr = makeDate.getMonth() + 1 + "-" + makeDate.getFullYear();
+      this.monthYearList.push(moyr);
+    }
     }
 
     LoadUserNames() {
