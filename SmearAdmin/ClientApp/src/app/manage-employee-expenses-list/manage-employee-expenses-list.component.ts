@@ -65,24 +65,25 @@ export class ManageEmployeeExpensesListComponent implements OnInit {
             this.findExpense();
         }
     }
+  
+  SetUserMonthYear() {
+    this.userName = this.userService.getUserName();
 
-    SetUserMonthYear() {
-        this.userName = this.userService.getUserName();
+    let moyr = "";
+    var today = new Date();
 
-        let today = new Date();
-        let moyr = "";
-        let month = today.getMonth() + 1;
+    for (var dt = 0; dt <= 5; dt++) {
+      var makeDate = new Date(today);
 
-        for (var i = 0; i <= 3; i++) {
-            if (i == 0) {
-                moyr = month + "-" + today.getFullYear();
-            }
-            else
-                moyr = month - i + "-" + today.getFullYear();
+      if (dt > 0) {
+        makeDate.setMonth(makeDate.getMonth() - dt);
+      }
 
-            this.monthYearList.push(moyr);
-        }
+      moyr = makeDate.getMonth() + 1 + "-" + makeDate.getFullYear();
+      this.monthYearList.push(moyr);
     }
+  }
+
 
     LoadUserNames() {
         this.showSpinner = true;
