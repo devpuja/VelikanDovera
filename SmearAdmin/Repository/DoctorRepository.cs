@@ -628,7 +628,7 @@ namespace SmearAdmin.Repository
                         ws.Cells[i + 2, 8].Value = datasource.ElementAt(i).VisitPlan;
                         ws.Cells[i + 2, 9].Value = datasource.ElementAt(i).BestDayToMeet;
                         ws.Cells[i + 2, 10].Value = datasource.ElementAt(i).BestTimeToMeet;
-                        ws.Cells[i + 2, 11].Value = datasource.ElementAt(i).Brand;
+                        ws.Cells[i + 2, 11].Value = string.Join(", ", datasource.ElementAt(i).BrandName);
                         ws.Cells[i + 2, 12].Value = datasource.ElementAt(i).Class;
                         ws.Cells[i + 2, 13].Value = datasource.ElementAt(i).Contact.Address;
                         ws.Cells[i + 2, 14].Value = datasource.ElementAt(i).Contact.State;
