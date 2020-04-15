@@ -47,7 +47,7 @@
 
                 <div class="col-md-3">
                   <mat-form-field>
-                    <input type="email" matInput placeholder="Email ID" formControlName="emailIdCtrl" required email maxlength="30">
+                    <input type="email" matInput placeholder="Email ID" formControlName="emailIdCtrl" required email maxlength="50">
                     <mat-error *ngIf="emailIdCtrl.hasError('required')">Enter Email ID</mat-error>
                     <mat-error *ngIf="emailIdCtrl.hasError('email')">Invalid Email ID</mat-error>
                   </mat-form-field>

@@ -55,9 +55,9 @@
 
     <div class="col-md-3">
       <mat-form-field>
-        <input matInput placeholder="Alternate Mobile" formControlName="ResidenceCtrl" maxlength="10" minlength="10" pattern="^[0-9]*">
-        <mat-error *ngIf="contactForm.controls.ResidenceCtrl.hasError('maxlength')">Mobile Number must be 10 digits</mat-error>
-        <mat-error *ngIf="contactForm.controls.ResidenceCtrl.hasError('minlength')">Mobile Number must be 10 digits</mat-error>
+        <input matInput placeholder="Alternate Mobile" formControlName="ResidenceCtrl" maxlength="12" minlength="10" pattern="^[0-9]*">
+        <mat-error *ngIf="contactForm.controls.ResidenceCtrl.hasError('maxlength')">Alternate Number must be between 10-12 digits</mat-error>
+        <mat-error *ngIf="contactForm.controls.ResidenceCtrl.hasError('minlength')">Alternate Number must be between 10-12 digits</mat-error>
         <mat-error *ngIf="contactForm.controls.ResidenceCtrl.hasError('pattern')">Only numbers are allowed</mat-error>
       </mat-form-field>
     </div>
