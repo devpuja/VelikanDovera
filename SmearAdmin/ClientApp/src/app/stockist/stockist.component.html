@@ -14,12 +14,12 @@
               <div class="row">
                 <div class="col-md-3">
                   <mat-form-field>
-                    <input matInput placeholder="Stockist Name" formControlName="StockistNameCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
-                    <mat-error *ngIf="StockistNameCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+                    <input matInput placeholder="Stockist Name" formControlName="StockistNameCtrl" required maxlength="50" minlength="3" pattern="[a-zA-Z ]*">
+                    <mat-error *ngIf="StockistNameCtrl.hasError('maxlength')">Max 50 chars</mat-error>
                     <mat-error *ngIf="StockistNameCtrl.hasError('minlength')">Min 3 chars</mat-error>
                     <mat-error *ngIf="StockistNameCtrl.hasError('required')">Stockist Name Required</mat-error>
                     <mat-error *ngIf="StockistNameCtrl.hasError('pattern')">Only letters are allowed</mat-error>
-                    <mat-hint align="end">{{StockistNameCtrl.value?.length || 0}} / 30</mat-hint>
+                    <mat-hint align="end">{{StockistNameCtrl.value?.length || 0}} / 50</mat-hint>
                   </mat-form-field>
                 </div>
 

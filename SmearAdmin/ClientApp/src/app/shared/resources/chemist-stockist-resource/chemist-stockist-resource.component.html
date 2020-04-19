@@ -2,31 +2,31 @@
   <div class="row">
     <div class="col-md-3">
       <mat-form-field>
-        <input matInput placeholder="DrugLicense No" formControlName="DrugLicenseNoCtrl" required maxlength="30" minlength="3">
-        <mat-error *ngIf="commonForm.controls.DrugLicenseNoCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <input matInput placeholder="DrugLicense No" formControlName="DrugLicenseNoCtrl" required maxlength="50" minlength="3">
+        <mat-error *ngIf="commonForm.controls.DrugLicenseNoCtrl.hasError('maxlength')">Max 50 chars</mat-error>
         <mat-error *ngIf="commonForm.controls.DrugLicenseNoCtrl.hasError('minlength')">Min 3 chars</mat-error>
         <mat-error *ngIf="commonForm.controls.DrugLicenseNoCtrl.hasError('required')">Drug License Number Required</mat-error>
-        <mat-hint align="end">{{commonForm.controls.DrugLicenseNoCtrl.value?.length || 0}} / 30</mat-hint>
+        <mat-hint align="end">{{commonForm.controls.DrugLicenseNoCtrl.value?.length || 0}} / 50</mat-hint>
       </mat-form-field>
     </div>
 
     <div class="col-md-3">
       <mat-form-field>
-        <input matInput placeholder="FoodLicense No" formControlName="FoodLicenseNoCtrl" required maxlength="30" minlength="3">
-        <mat-error *ngIf="commonForm.controls.FoodLicenseNoCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <input matInput placeholder="FoodLicense No" formControlName="FoodLicenseNoCtrl" required maxlength="50" minlength="3">
+        <mat-error *ngIf="commonForm.controls.FoodLicenseNoCtrl.hasError('maxlength')">Max 50 chars</mat-error>
         <mat-error *ngIf="commonForm.controls.FoodLicenseNoCtrl.hasError('minlength')">Min 3 chars</mat-error>
         <mat-error *ngIf="commonForm.controls.FoodLicenseNoCtrl.hasError('required')">Food License Number Required</mat-error>
-        <mat-hint align="end">{{commonForm.controls.FoodLicenseNoCtrl.value?.length || 0}} / 30</mat-hint>
+        <mat-hint align="end">{{commonForm.controls.FoodLicenseNoCtrl.value?.length || 0}} / 50</mat-hint>
       </mat-form-field>
     </div>
 
     <div class="col-md-3">
       <mat-form-field>
-        <input matInput placeholder="GST No" formControlName="GSTNoCtrl" required maxlength="30" minlength="3">
-        <mat-error *ngIf="commonForm.controls.GSTNoCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <input matInput placeholder="GST No" formControlName="GSTNoCtrl" required maxlength="50" minlength="3">
+        <mat-error *ngIf="commonForm.controls.GSTNoCtrl.hasError('maxlength')">Max 50 chars</mat-error>
         <mat-error *ngIf="commonForm.controls.GSTNoCtrl.hasError('minlength')">Min 3 chars</mat-error>
         <mat-error *ngIf="commonForm.controls.GSTNoCtrl.hasError('required')">GST No Required</mat-error>
-        <mat-hint align="end">{{commonForm.controls.GSTNoCtrl.value?.length || 0}} / 30</mat-hint>
+        <mat-hint align="end">{{commonForm.controls.GSTNoCtrl.value?.length || 0}} / 50</mat-hint>
       </mat-form-field>
     </div>
 
@@ -47,12 +47,12 @@
   <div class="row">
     <div class="col-md-3">
       <mat-form-field>
-        <input matInput placeholder="Owner Name" formControlName="OwnerNameCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
-        <mat-error *ngIf="commonForm.controls.OwnerNameCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <input matInput placeholder="Owner Name" formControlName="OwnerNameCtrl" required maxlength="50" minlength="3" pattern="[a-zA-Z ]*">
+        <mat-error *ngIf="commonForm.controls.OwnerNameCtrl.hasError('maxlength')">Max 50 chars</mat-error>
         <mat-error *ngIf="commonForm.controls.OwnerNameCtrl.hasError('minlength')">Min 3 chars</mat-error>
         <mat-error *ngIf="commonForm.controls.OwnerNameCtrl.hasError('required')">Owner Name Required</mat-error>
         <mat-error *ngIf="commonForm.controls.OwnerNameCtrl.hasError('pattern')">Only letters are allowed</mat-error>
-        <mat-hint align="end">{{commonForm.controls.OwnerNameCtrl.value?.length || 0}} / 30</mat-hint>
+        <mat-hint align="end">{{commonForm.controls.OwnerNameCtrl.value?.length || 0}} / 50</mat-hint>
       </mat-form-field>
     </div>
 

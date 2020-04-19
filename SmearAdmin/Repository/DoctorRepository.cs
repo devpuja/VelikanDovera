@@ -585,16 +585,16 @@ namespace SmearAdmin.Repository
                     ws.Cells[1, 15].Value = "City";
                     ws.Cells[1, 15].Style.Font.Bold = true;
 
-                    ws.Cells[1, 16].Value = "PinCode";
+                    ws.Cells[1, 16].Value = "Pin Code";
                     ws.Cells[1, 16].Style.Font.Bold = true;
 
-                    ws.Cells[1, 17].Value = "EmailID";
+                    ws.Cells[1, 17].Value = "Email ID";
                     ws.Cells[1, 17].Style.Font.Bold = true;
 
                     ws.Cells[1, 18].Value = "Mobile Number";
                     ws.Cells[1, 18].Style.Font.Bold = true;
 
-                    ws.Cells[1, 19].Value = "Residence Number";
+                    ws.Cells[1, 19].Value = "Alternate Number";
                     ws.Cells[1, 19].Style.Font.Bold = true;
 
                     ws.Cells[1, 20].Value = "Contact Person Mobile";

@@ -75,30 +75,30 @@ export class StockistComponent implements OnInit {
 
     ngOnInit() {
         //Form's Data
-        this.stockFormGroup = this._formBuilder.group({
-            "StockistNameCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)])],
-            "common": this._formBuilder.group({
-                "DrugLicenseNoCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)])],
-                "FoodLicenseNoCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)])],
-                "GSTNoCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)])],
-                "BestTimeToMeetCtrl": ['', Validators.required],
-                "AreaCtrl": ['', Validators.required],
-                "OwnerNameCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)])],
-                "DOACtrl": ['', Validators.required],
-                "DOBCtrl": ['', Validators.required],
-                "EmailIDCtrl": ['',],
-            }),
-            "contact": this._formBuilder.group({
-                "AddressCtrl": ['', Validators.required],
-                "StateCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)])],
-                "CityCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)])],
-                "PinCodeCtrl": ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6)])],
-                "MobileCtrl": ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
-                "ResidenceCtrl": ['', Validators.compose([Validators.minLength(10), Validators.maxLength(12)])],
-            }),
-            "FoundationDayCtrl": ['',],
-            "CommunityCtrl": ['', Validators.required],
-        });
+      this.stockFormGroup = this._formBuilder.group({
+        "StockistNameCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
+        "common": this._formBuilder.group({
+          "DrugLicenseNoCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
+          "FoodLicenseNoCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
+          "GSTNoCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
+          "BestTimeToMeetCtrl": ['', Validators.required],
+          "AreaCtrl": ['', Validators.required],
+          "OwnerNameCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
+          "DOACtrl": ['', Validators.required],
+          "DOBCtrl": ['', Validators.required],
+          "EmailIDCtrl": ['',],
+        }),
+        "contact": this._formBuilder.group({
+          "AddressCtrl": ['', Validators.required],
+          "StateCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
+          "CityCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
+          "PinCodeCtrl": ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6)])],
+          "MobileCtrl": ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
+          "ResidenceCtrl": ['', Validators.compose([Validators.minLength(10), Validators.maxLength(12)])],
+        }),
+        "FoundationDayCtrl": ['',],
+        "CommunityCtrl": ['', Validators.required],
+      });
 
         let today = new Date();
         this.maxDateFoundation = new Date(today.getFullYear(), today.getMonth(), today.getDate());

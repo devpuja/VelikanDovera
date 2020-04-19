@@ -3,31 +3,31 @@
   <div class="row">
     <div class="col-md-3">
       <mat-form-field>
-        <textarea matInput placeholder="Address" formControlName="AddressCtrl" required maxlength="200"></textarea>
+        <textarea matInput placeholder="Address" formControlName="AddressCtrl" required maxlength="250"></textarea>
         <mat-error *ngIf="contactForm.controls.AddressCtrl.hasError('required')">Address Required</mat-error>
-        <mat-hint align="end">{{contactForm.controls.AddressCtrl.value?.length || 0}} / 200</mat-hint>
+        <mat-hint align="end">{{contactForm.controls.AddressCtrl.value?.length || 0}} / 250</mat-hint>
       </mat-form-field>
     </div>
 
     <div class="col-md-3">
       <mat-form-field>
-        <input matInput placeholder="State" formControlName="StateCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
-        <mat-error *ngIf="contactForm.controls.StateCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <input matInput placeholder="State" formControlName="StateCtrl" required maxlength="50" minlength="3" pattern="[a-zA-Z ]*">
+        <mat-error *ngIf="contactForm.controls.StateCtrl.hasError('maxlength')">Max 50 chars</mat-error>
         <mat-error *ngIf="contactForm.controls.StateCtrl.hasError('minlength')">Min 3 chars</mat-error>
         <mat-error *ngIf="contactForm.controls.StateCtrl.hasError('required')">State Required</mat-error>
         <mat-error *ngIf="contactForm.controls.StateCtrl.hasError('pattern')">Only letters are allowed</mat-error>
-        <mat-hint align="end">{{contactForm.controls.StateCtrl.value?.length || 0}} / 30</mat-hint>
+        <mat-hint align="end">{{contactForm.controls.StateCtrl.value?.length || 0}} / 50</mat-hint>
       </mat-form-field>
     </div>
 
     <div class="col-md-3">
       <mat-form-field>
-        <input matInput placeholder="City" formControlName="CityCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
-        <mat-error *ngIf="contactForm.controls.CityCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+        <input matInput placeholder="City" formControlName="CityCtrl" required maxlength="50" minlength="3" pattern="[a-zA-Z ]*">
+        <mat-error *ngIf="contactForm.controls.CityCtrl.hasError('maxlength')">Max 50 chars</mat-error>
         <mat-error *ngIf="contactForm.controls.CityCtrl.hasError('minlength')">Min 3 chars</mat-error>
         <mat-error *ngIf="contactForm.controls.CityCtrl.hasError('required')">City Required</mat-error>
         <mat-error *ngIf="contactForm.controls.CityCtrl.hasError('pattern')">Only letters are allowed</mat-error>
-        <mat-hint align="end">{{contactForm.controls.CityCtrl.value?.length || 0}} / 30</mat-hint>
+        <mat-hint align="end">{{contactForm.controls.CityCtrl.value?.length || 0}} / 50</mat-hint>
       </mat-form-field>
     </div>
 

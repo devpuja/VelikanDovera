@@ -503,19 +503,19 @@ namespace SmearAdmin.Repository
                     ws.Cells[1, 5].Value = "City";
                     ws.Cells[1, 5].Style.Font.Bold = true;
 
-                    ws.Cells[1, 6].Value = "PinCode";
+                    ws.Cells[1, 6].Value = "Pin Code";
                     ws.Cells[1, 6].Style.Font.Bold = true;
 
                     ws.Cells[1, 7].Value = "Area";
                     ws.Cells[1, 7].Style.Font.Bold = true;
 
-                    ws.Cells[1, 8].Value = "EmailID";
+                    ws.Cells[1, 8].Value = "Email ID";
                     ws.Cells[1, 8].Style.Font.Bold = true;
 
                     ws.Cells[1, 9].Value = "Mobile Number";
                     ws.Cells[1, 9].Style.Font.Bold = true;
 
-                    ws.Cells[1, 10].Value = "Residence Number";
+                    ws.Cells[1, 10].Value = "Alternate Number";
                     ws.Cells[1, 10].Style.Font.Bold = true;
 
                     ws.Cells[1, 11].Value = "Drug License No";

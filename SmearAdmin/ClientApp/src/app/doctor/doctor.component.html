@@ -14,12 +14,12 @@
               <div class="row">
                 <div class="col-md-3">
                   <mat-form-field>
-                    <input matInput placeholder="Full Name" formControlName="NameCtrl" required maxlength="30" minlength="3" pattern="[a-zA-Z ]*">
-                    <mat-error *ngIf="NameCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+                    <input matInput placeholder="Full Name" formControlName="NameCtrl" required maxlength="50" minlength="3" pattern="[a-zA-Z ]*">
+                    <mat-error *ngIf="NameCtrl.hasError('maxlength')">Max 50 chars</mat-error>
                     <mat-error *ngIf="NameCtrl.hasError('minlength')">Min 3 chars</mat-error>
                     <mat-error *ngIf="NameCtrl.hasError('required')">First Name Required</mat-error>
                     <mat-error *ngIf="NameCtrl.hasError('pattern')">Only letters are allowed</mat-error>
-                    <mat-hint align="end">{{NameCtrl.value?.length || 0}} / 30</mat-hint>
+                    <mat-hint align="end">{{NameCtrl.value?.length || 0}} / 50</mat-hint>
                   </mat-form-field>
                 </div>
 
@@ -37,11 +37,11 @@
 
                 <div class="col-md-3">
                   <mat-form-field>
-                    <input matInput placeholder="Registration No" formControlName="RegistrationNoCtrl" required maxlength="30" minlength="3">
-                    <mat-error *ngIf="RegistrationNoCtrl.hasError('maxlength')">Max 30 chars</mat-error>
+                    <input matInput placeholder="Registration No" formControlName="RegistrationNoCtrl" required maxlength="50" minlength="3">
+                    <mat-error *ngIf="RegistrationNoCtrl.hasError('maxlength')">Max 50 chars</mat-error>
                     <mat-error *ngIf="RegistrationNoCtrl.hasError('minlength')">Min 3 chars</mat-error>
                     <mat-error *ngIf="RegistrationNoCtrl.hasError('required')">Registration No Required</mat-error>
-                    <mat-hint align="end">{{RegistrationNoCtrl.value?.length || 0}} / 30</mat-hint>
+                    <mat-hint align="end">{{RegistrationNoCtrl.value?.length || 0}} / 50</mat-hint>
                   </mat-form-field>
                 </div>
 

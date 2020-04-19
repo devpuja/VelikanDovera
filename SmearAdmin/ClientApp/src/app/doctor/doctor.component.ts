@@ -105,9 +105,9 @@ export class DoctorComponent implements OnInit {
 
     //Form's Data
     this.docFormGroup = this._formBuilder.group({
-      "NameCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)])],
+      "NameCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
       "QualificationCtrl": ['', Validators.required],
-      "RegistrationNoCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)])],
+      "RegistrationNoCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
       "SpecialityCtrl": ['', Validators.required],
       "GenderCtrl": ['', Validators.required],
       "VisitFrequencyCtrl": ['', Validators.required],
@@ -120,8 +120,8 @@ export class DoctorComponent implements OnInit {
       "DOBCtrl": ['', Validators.required],
       "contact": this._formBuilder.group({
         "AddressCtrl": ['', Validators.required],
-        "StateCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)])],
-        "CityCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)])],
+        "StateCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
+        "CityCtrl": ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
         "PinCodeCtrl": ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(6)])],
         "MobileCtrl": ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
         "ResidenceCtrl": ['', Validators.compose([Validators.minLength(10), Validators.maxLength(12)])],
