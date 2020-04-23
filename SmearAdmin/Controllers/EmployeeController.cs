@@ -158,6 +158,7 @@ namespace SmearAdmin.Controllers
                     //Add Contact
                     ContactResourseViewModel contactVM = userRegVM.Contact;                    
                     var empContact = mapper.Map<ContactResourseViewModel, Data.ContactResourse>(contactVM);
+                    empContact.Id = Guid.NewGuid().ToString();
                     empContact.RefTableId = userIdentity.Id;                    
                     _unitOfWork.ContactResource.Add(empContact);
 
